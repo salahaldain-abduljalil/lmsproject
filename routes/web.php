@@ -3,8 +3,10 @@
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\InstructorController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
+
 
 
 
@@ -23,9 +25,11 @@ use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 Route::group(['prefix' => LaravelLocalization::setLocale()], function()
 {
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
+
+Route::get('/',[UserController::class, 'main']);
 
 Route::get('/dashboard', function () {
     return view('dashboard');

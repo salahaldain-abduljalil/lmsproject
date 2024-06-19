@@ -17,7 +17,7 @@ class AuthenticatedSessionController extends Controller
      */
     public function create(): View
     {
-        return view('auth.login');
+        return view('frontend.dashboard.login');
     }
 
     /**
@@ -34,9 +34,11 @@ class AuthenticatedSessionController extends Controller
         }elseif($request->user()->role === 'instructor'){
 
             return to_route('instructor.dashboard');
+        }elseif($request->user()){
+
+            return redirect()->intended(RouteServiceProvider::HOME);
         }
 
-        return redirect()->intended(RouteServiceProvider::HOME);
     }
 
     /**
