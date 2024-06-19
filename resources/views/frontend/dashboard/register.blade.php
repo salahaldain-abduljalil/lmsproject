@@ -43,7 +43,7 @@
                             </h3>
                             <div class="section-block"></div>
 
-                            <form method="post" class="pt-4" action="{{ route('register') }}">
+                            <form method="POST" class="pt-4" action="{{ route('register') }}">
                                 @csrf
 
                                 <div class="d-flex flex-wrap align-items-center pb-4">

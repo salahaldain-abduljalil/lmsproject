@@ -10,48 +10,50 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
 
-class AuthenticatedSessionController extends Controller
-{
+class AuthenticatedSessionController extends Controller {
     /**
-     * Display the login view.
-     */
-    public function create(): View
-    {
-        return view('frontend.dashboard.login');
+    * Display the login view.
+    */
+
+    public function create(): View {
+        return view( 'frontend.dashboard.login' );
     }
 
     /**
-     * Handle an incoming authentication request.
-     */
-    public function store(LoginRequest $request): RedirectResponse
-    {
+    * Handle an incoming authentication request.
+    */
+
+    public function store( LoginRequest $request ): RedirectResponse {
         $request->authenticate();
 
         $request->session()->regenerate();
+        $url = '';
+        if ( $request->user()->role === 'admin' ) {
+            $url = 'admin/dashboard';
 
-        if($request->user()->role === 'admin'){
-            return to_route('admin.dashboard');
-        }elseif($request->user()->role === 'instructor'){
+        } elseif ( $request->user()->role === 'instructor' ) {
 
-            return to_route('instructor.dashboard');
-        }elseif($request->user()){
+            $url = 'instructor/dashboard';
+        } elseif ( $request->user()->role === 'user') {
+            $url = 'dashboard';
 
-            return redirect()->intended(RouteServiceProvider::HOME);
         }
+
+        return redirect()->intended( $url );
 
     }
 
     /**
-     * Destroy an authenticated session.
-     */
-    public function destroy(Request $request): RedirectResponse
-    {
-        Auth::guard('web')->logout();
+    * Destroy an authenticated session.
+    */
+
+    public function destroy( Request $request ): RedirectResponse {
+        Auth::guard( 'web' )->logout();
 
         $request->session()->invalidate();
 
         $request->session()->regenerateToken();
 
-        return redirect('/');
+        return redirect( '/' );
     }
 }
