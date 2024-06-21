@@ -20,9 +20,9 @@ use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 
 Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
 
-// Route::get('/', function () {
-//     return view('welcome');
-// });
+    // Route::get('/', function () {
+    //     return view('welcome');
+    // });
 
     Route::get('/', [UserController::class, 'main']);
 
@@ -36,7 +36,6 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
         Route::get('/user/logout', [UserController::class, 'UserLogout'])->name('user.logout');
         Route::get('/user/change/password', [UserController::class, 'UserChangePassword'])->name('user.change.password');
         Route::post('/user/password/update', [UserController::class, 'UserPasswordUpdate'])->name('user.password.update');
-
     });
 
     require __DIR__ . '/auth.php';
@@ -60,7 +59,15 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
             Route::post('/update/category', 'UpdateCategory')->name('update.category');
             Route::get('/delete/category/{id}', 'DeleteCategory')->name('delete.category');
 
-        });
+
+
+            // Instructor All Route
+            Route::controller(AdminController::class)->group(function () {
+                Route::get('/all/instructor', 'AllInstructor')->name('all.instructor');
+                Route::post('/update/user/stauts','UpdateUserStatus')->name('update.user.stauts');
+
+            });
+        });///ُEnd Of Admin Middleware.
 
         // SubCategory All Route
         Route::controller(CategoryController::class)->group(function () {
@@ -70,12 +77,13 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
             Route::get('/edit/subcategory/{id}', 'EditSubCategory')->name('edit.subcategory');
             Route::post('/update/subcategory', 'UpdateSubCategory')->name('update.subcategory');
             Route::get('/delete/subcategory/{id}', 'DeleteSubCategory')->name('delete.subcategory');
-
         });
-
     });
 
     Route::get('admin/login', [AdminController::class, 'adminLogin'])->name('admin.login');
+    ////instructor frontend Routes.
+    Route::get('/become/instructor', [AdminController::class, 'BecomeInstructor'])->name('become.instructor');
+    Route::post('/instructor/register', [AdminController::class, 'InstructorRegister'])->name('instructor.register');
 
     Route::middleware(['auth', 'role:instructor'])->group(function () {
 
@@ -86,8 +94,6 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
         Route::post('/instructor/profile/store', [InstructorController::class, 'InstructorProfileStore'])->name('instructor.profile.store');
         Route::get('/instructor/change/password', [InstructorController::class, 'InstructorChangePassword'])->name('instructor.change.password');
         Route::post('/instructor/password/update', [InstructorController::class, 'InstructorPasswordUpdate'])->name('instructor.password.update');
-
     }); ////End.
     Route::get('/instructor/login', [InstructorController::class, 'InstructorLogin'])->name('instructor.login');
-
 })->middleware(['localeSessionRedirect', 'localizationRedirect', 'localeViewPath', 'localize']);

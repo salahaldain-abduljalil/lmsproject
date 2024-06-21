@@ -10,50 +10,53 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
 
-class AuthenticatedSessionController extends Controller {
+class AuthenticatedSessionController extends Controller
+{
     /**
-    * Display the login view.
-    */
+     * Display the login view.
+     */
 
-    public function create(): View {
-        return view( 'frontend.dashboard.login' );
+    public function create(): View
+    {
+        return view('frontend.dashboard.login');
     }
 
     /**
-    * Handle an incoming authentication request.
-    */
+     * Handle an incoming authentication request.
+     */
 
-    public function store( LoginRequest $request ): RedirectResponse {
+    public function store(LoginRequest $request): RedirectResponse
+    {
         $request->authenticate();
 
         $request->session()->regenerate();
+
+
         $url = '';
-        if ( $request->user()->role === 'admin' ) {
+        if ($request->user()->role === 'admin') {
             $url = 'admin/dashboard';
+        } elseif ($request->user()->role === 'instructor') {
 
-        } elseif ( $request->user()->role === 'instructor' ) {
-
-            $url = 'instructor/dashboard';
-        } elseif ( $request->user()->role === 'user') {
-            $url = 'dashboard';
-
+            $url = '/instructor/dashboard';
+        } elseif ($request->user()->role === 'user') {
+            $url = '/dashboard';
         }
 
-        return redirect()->intended( $url );
-
+        return redirect()->intended($url);
     }
 
     /**
-    * Destroy an authenticated session.
-    */
+     * Destroy an authenticated session.
+     */
 
-    public function destroy( Request $request ): RedirectResponse {
-        Auth::guard( 'web' )->logout();
+    public function destroy(Request $request): RedirectResponse
+    {
+        Auth::guard('web')->logout();
 
         $request->session()->invalidate();
 
         $request->session()->regenerateToken();
 
-        return redirect( '/' );
+        return redirect('/');
     }
 }
