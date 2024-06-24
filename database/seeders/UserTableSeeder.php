@@ -16,7 +16,7 @@ class UserTableSeeder extends Seeder
     {
 
         DB::table('users')->delete();
-        DB::table('users')->insert(
+        DB::table('users')->insert([
             [
                 'name'=> 'Admin',
                 'user_name'=> 'admin',
@@ -24,26 +24,28 @@ class UserTableSeeder extends Seeder
                 'password'=> Hash::make(111),
                 'role'=> 'admin',
                 'status'=> '1',
-            ]);
-
-            DB::table('users')->insert(
-                [
-                    'name'=> 'Instructor',
-                    'user_name'=> 'instructor',
-                    'email'=> 'instructor@gmail.com',
-                    'role'=> 'instructor',
-                    'password'=> Hash::make(111),
-                ]
-                );
-
-          DB::table('users')->insert(
+            ],
+            [
+                'name'=> 'Instructor',
+                'user_name'=> 'instructor',
+                'email'=> 'instructor@gmail.com',
+                'password'=> Hash::make(111),
+                'role'=> 'instructor',
+                'status'=> '1',
+            ],
             [
                 'name'=> 'User',
                 'user_name'=> 'user',
                 'email'=> 'user@gmail.com',
                 'password'=> Hash::make(111),
-            ]
-            );
+                'role'=> 'user',
+                'status'=> '1',
+            ],
+
+
+        ]);
+
+
 
     }
 }
