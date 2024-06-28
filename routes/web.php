@@ -3,9 +3,13 @@
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\Backend\CourseController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\Frontend\IndexController;
 use App\Http\Controllers\InstructorController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
+
+
+
 
 
 /*
@@ -119,4 +123,10 @@ Route::middleware(['auth', 'role:instructor'])->group(function () {
 
     });
 }); ////End.
+
+/////Route Accessable for All.
 Route::get('/instructor/login', [InstructorController::class, 'InstructorLogin'])->name('instructor.login');
+
+Route::get('/course/details/{id}/{slug}', [IndexController::class, 'CourseDetails']);
+
+///// End Route Accessable for All

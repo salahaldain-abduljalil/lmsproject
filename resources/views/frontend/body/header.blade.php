@@ -64,7 +64,7 @@
                 <div class="row align-items-center">
                     <div class="col-lg-2">
                         <div class="logo-box">
-                            <a href="index.html" class="logo"><img src="{{ asset('frontend.images') }}/logo.png"
+                            <a href="{{ url('/') }}" class="logo"><img src="{{ asset('frontend/images') }}/logo.png"
                                     alt="logo"></a>
                             <div class="user-btn-action">
                                 <div class="search-menu-toggle icon-element icon-element-sm shadow-sm mr-2"
@@ -228,13 +228,7 @@
                             <nav class="main-menu">
                                 <ul>
                                     <li>
-                                        <a href="#">Home <i class="la la-angle-down fs-12"></i></a>
-                                        <ul class="dropdown-menu-item">
-                                            <li><a href="index.html">Home One</a></li>
-                                            <li><a href="home-2.html">Home Two</a></li>
-                                            <li><a href="home-3.html">Home Three</a></li>
-                                            <li><a href="home-4.html">Home four</a></li>
-                                        </ul>
+                                        <a href="{{ url('/') }}">Home</a>
                                     </li>
                                     <li>
                                         <a href="#">courses <i class="la la-angle-down fs-12"></i></a>
@@ -311,7 +305,7 @@
                                                                 Learning <i
                                                                     class="la la-arrow-right icon ml-1"></i></a>
                                                         </div>
-                                                        <img src="{{ asset('frontend.images') }}/menu-banner-img.jpg"
+                                                        <img src="{{ asset('frontend/images') }}/menu-banner-img.jpg"
                                                             alt="menu banner image"
                                                             class="w-100 h-100 rounded-rounded">
                                                     </div>
@@ -341,7 +335,7 @@
                                         <ul class="cart-dropdown-menu">
                                             <li class="media media-card">
                                                 <a href="shopping-cart.html" class="media-img">
-                                                    <img src="{{ asset('frontend.images') }}/small-img.jpg"
+                                                    <img src="{{ asset('frontend/images') }}/small-img.jpg"
                                                         alt="Cart image">
                                                 </a>
                                                 <div class="media-body">
@@ -354,7 +348,7 @@
                                             </li>
                                             <li class="media media-card">
                                                 <a href="shopping-cart.html" class="media-img">
-                                                    <img src="{{ asset('frontend.images') }}/small-img.jpg"
+                                                    <img src="{{ asset('frontend/images') }}/small-img.jpg"
                                                         alt="Cart image">
                                                 </a>
                                                 <div class="media-body">
@@ -410,66 +404,10 @@
                 <ul class="sub-menu">
                     <li><a href="course-grid.html">course grid</a></li>
                     <li><a href="course-list.html">course list</a></li>
-                    <li><a href="course-grid-left-sidebar.html">grid left sidebar</a></li>
-                    <li><a href="course-grid-right-sidebar.html">grid right sidebar</a></li>
-                    <li><a href="course-list-left-sidebar.html">list left sidebar <span
-                                class="ribbon ribbon-blue-bg">New</span></a></li>
-                    <li><a href="course-list-right-sidebar.html">list right sidebar <span
-                                class="ribbon ribbon-blue-bg">New</span></a></li>
-                    <li><a href="course-details.html">course details</a></li>
-                    <li><a href="lesson-details.html">lesson details</a></li>
-                    <li><a href="my-courses.html">My courses</a></li>
                 </ul>
             </li>
             <li>
-                <a href="#">Student</a>
-                <ul class="sub-menu">
-                    <li><a href="student-detail.html">student detail</a></li>
-                    <li><a href="student-quiz.html">take quiz</a></li>
-                    <li><a href="student-quiz-results.html">quiz results</a></li>
-                    <li><a href="student-quiz-result-details.html">quiz details</a></li>
-                    <li><a href="student-quiz-result-details-2.html">quiz details 2</a></li>
-                    <li><a href="student-path.html">path details</a></li>
-                    <li><a href="student-path-assessment.html">Skill Assessment</a></li>
-                    <li><a href="student-path-assessment-result.html">Skill result</a></li>
-                </ul>
-            </li>
-            <li>
-                <a href="#">pages</a>
-                <ul class="sub-menu">
-                    <li><a href="dashboard.html">dashboard <span class="ribbon">Hot</span></a></li>
-                    <li><a href="about.html">about</a></li>
-                    <li><a href="teachers.html">Teachers</a></li>
-                    <li><a href="teacher-detail.html">Teacher detail</a></li>
-                    <li><a href="careers.html">careers</a></li>
-                    <li><a href="career-details.html">career details</a></li>
-                    <li><a href="categories.html">categories</a></li>
-                    <li><a href="terms-and-conditions.html">Terms & conditions</a></li>
-                    <li><a href="privacy-policy.html">privacy policy</a></li>
-                    <li><a href="for-business.html">for business</a></li>
-                    <li><a href="become-a-teacher.html">become an instructor</a></li>
-                    <li><a href="faq.html">FAQs</a></li>
-                    <li><a href="admission.html">admission</a></li>
-                    <li><a href="gallery.html">gallery</a></li>
-                    <li><a href="pricing-table.html">pricing tables</a></li>
-                    <li><a href="contact.html">contact</a></li>
-                    <li><a href="sign-up.html">sign-up</a></li>
-                    <li><a href="login.html">login</a></li>
-                    <li><a href="recover.html">recover</a></li>
-                    <li><a href="shopping-cart.html">cart</a></li>
-                    <li><a href="checkout.html">checkout</a></li>
-                    <li><a href="error.html">page 404</a></li>
-                </ul>
-            </li>
-            <li>
-                <a href="#">blog</a>
-                <ul class="sub-menu">
-                    <li><a href="blog-full-width.html">blog full width </a></li>
-                    <li><a href="blog-no-sidebar.html">blog no sidebar</a></li>
-                    <li><a href="blog-left-sidebar.html">blog left sidebar</a></li>
-                    <li><a href="blog-right-sidebar.html">blog right sidebar</a></li>
-                    <li><a href="blog-single.html">blog detail</a></li>
-                </ul>
+              <a href="#">Blogs</a>
             </li>
         </ul>
     </div><!-- end off-canvas-menu -->
