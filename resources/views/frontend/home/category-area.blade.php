@@ -35,7 +35,7 @@
                                 <div class="category-inner">
                                     <h3 class="cat__title"><a href="#">{{ $cat->category_name }}</a></h3>
                                     <p class="cat__meta">{{ count($course) }} courses</p>
-                                    <a href="#" class="btn theme-btn theme-btn-sm theme-btn-white">Explore<i
+                                    <a href="{{ url('category/'.$cat->id.'/'.$cat->category_slug) }}" class="btn theme-btn theme-btn-sm theme-btn-white">Explore<i
                                             class="la la-arrow-right icon ml-1"></i></a>
                                 </div>
                             </div><!-- end category-content -->
