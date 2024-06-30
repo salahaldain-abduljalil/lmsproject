@@ -72,7 +72,7 @@
                                             <h6 class="ribbon ribbon-blue-bg fs-14 mb-3">{{ $course->label }}</h6>
                                             <h5 class="card-title"><a
                                                     href="course-details.html">{{ $course->course_name }}</a></h5>
-                                            <p class="card-text"><a href="">{{ $course['user']['name'] }}</a></p>
+                                            <p class="card-text"><a href="{{ route('instructor.details',$course->instructor_id) }}">{{ $course['user']['name'] }}</a></p>
                                             <div class="rating-wrap d-flex align-items-center py-2">
                                                 <div class="review-stars">
                                                     <span class="rating-number">4.4</span>
@@ -95,7 +95,7 @@
                                                     </p>
                                                 @endif
                                                 <div class="icon-element icon-element-sm shadow-sm cursor-pointer"
-                                                    title="Add to Wishlist"><i class="la la-heart-o"></i></div>
+                                                    title="Add to Wishlist"><i class="la la-heart-o" id="{{ $course->id }}" onclick="addToWishList(this.id)" ></i></div>
                                             </div>
                                         </div><!-- end card-body -->
                                     </div><!-- end card -->
