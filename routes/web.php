@@ -3,11 +3,13 @@
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\Backend\CourseController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\Frontend\CartController;
 use App\Http\Controllers\Frontend\IndexController;
 use App\Http\Controllers\InstructorController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\WishlistController;
 use Illuminate\Support\Facades\Route;
+
 
 
 
@@ -142,5 +144,17 @@ Route::get('/category/{id}/{slug}', [IndexController::class, 'CategoryCourse']);
 Route::get('/subcategory/{id}/{slug}', [IndexController::class, 'SubCategoryCourse']);
 Route::get('/instructor/details/{id}', [IndexController::class, 'InstructorDetails'])->name('instructor.details');
 Route::post('/add-to-wishlist/{course_id}', [WishlistController::class, 'AddToWishList']);
+Route::post('/cart/data/store/{id}', [CartController::class, 'AddToCart']);
+Route::get('/cart/data/', [CartController::class, 'CartData']);
+// Get Data from Minicart.
+Route::get('/course/mini/cart/', [CartController::class, 'AddMiniCart']);
+Route::get('/minicart/course/remove/{rowId}', [CartController::class, 'RemoveMiniCart']);
 
+
+// Cart All Route
+Route::controller(CartController::class)->group(function(){
+    Route::get('/mycart','MyCart')->name('mycart');
+    Route::get('/get-cart-course','GetCartCourse');
+    Route::get('/cart-remove/{rowId}','CartRemove');
+});
 ///// End Route Accessable for All
