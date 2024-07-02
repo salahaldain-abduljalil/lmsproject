@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\Backend\CouponController;
 use App\Http\Controllers\Backend\CourseController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\Frontend\CartController;
@@ -9,10 +10,6 @@ use App\Http\Controllers\InstructorController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\WishlistController;
 use Illuminate\Support\Facades\Route;
-
-
-
-
 
 
 
@@ -44,13 +41,11 @@ Route::middleware('auth')->group(function () {
     Route::get('/user/change/password', [UserController::class, 'UserChangePassword'])->name('user.change.password');
     Route::post('/user/password/update', [UserController::class, 'UserPasswordUpdate'])->name('user.password.update');
 
-
     // User Wishlist All Route
     Route::controller(WishListController::class)->group(function () {
         Route::get('/user/wishlist', 'AllWishlist')->name('user.wishlist');
-        Route::get('/get-wishlist-course/','GetWishlistCourse');
-        Route::get('/wishlist-remove/{id}','RemoveWishlist');
-
+        Route::get('/get-wishlist-course/', 'GetWishlistCourse');
+        Route::get('/wishlist-remove/{id}', 'RemoveWishlist');
 
     });
 });
@@ -81,6 +76,25 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
             Route::get('/all/instructor', 'AllInstructor')->name('all.instructor');
             Route::post('/update/user/stauts', 'UpdateUserStatus')->name('update.user.stauts');
         });
+
+        // Admin Coruses All Route
+        Route::controller(AdminController::class)->group(function () {
+            Route::get('/admin/all/course', 'AdminAllCourse')->name('admin.all.course');
+            Route::post('/update/course/stauts','UpdateCourseStatus')->name('update.course.stauts');
+            Route::get('/admin/course/details/{id}','AdminCourseDetails')->name('admin.course.details');
+
+        });
+
+        // Admin Coupon All Route
+Route::controller(CouponController::class)->group(function(){
+    Route::get('/admin/all/coupon','AdminAllCoupon')->name('admin.all.coupon');
+    Route::get('/admin/add/coupon','AdminAddCoupon')->name('admin.add.coupon');
+    Route::post('/admin/store/coupon','AdminStoreCoupon')->name('admin.store.coupon');
+
+    Route::get('/admin/edit/coupon/{id}','AdminEditCoupon')->name('admin.edit.coupon');
+    Route::post('/admin/update/coupon','AdminUpdateCoupon')->name('admin.update.coupon');
+    Route::get('/admin/delete/coupon/{id}','AdminDeleteCoupon')->name('admin.delete.coupon'); 
+});
     }); ///ُEnd Of Admin Middleware.
 
     // SubCategory All Route
@@ -108,7 +122,6 @@ Route::middleware(['auth', 'role:instructor'])->group(function () {
     Route::post('/instructor/profile/store', [InstructorController::class, 'InstructorProfileStore'])->name('instructor.profile.store');
     Route::get('/instructor/change/password', [InstructorController::class, 'InstructorChangePassword'])->name('instructor.change.password');
     Route::post('/instructor/password/update', [InstructorController::class, 'InstructorPasswordUpdate'])->name('instructor.password.update');
-
 
     // Instructor All Route
     Route::controller(CourseController::class)->group(function () {
@@ -150,11 +163,10 @@ Route::get('/cart/data/', [CartController::class, 'CartData']);
 Route::get('/course/mini/cart/', [CartController::class, 'AddMiniCart']);
 Route::get('/minicart/course/remove/{rowId}', [CartController::class, 'RemoveMiniCart']);
 
-
 // Cart All Route
-Route::controller(CartController::class)->group(function(){
-    Route::get('/mycart','MyCart')->name('mycart');
-    Route::get('/get-cart-course','GetCartCourse');
-    Route::get('/cart-remove/{rowId}','CartRemove');
+Route::controller(CartController::class)->group(function () {
+    Route::get('/mycart', 'MyCart')->name('mycart');
+    Route::get('/get-cart-course', 'GetCartCourse');
+    Route::get('/cart-remove/{rowId}', 'CartRemove');
 });
 ///// End Route Accessable for All
