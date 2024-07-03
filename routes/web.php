@@ -93,7 +93,7 @@ Route::controller(CouponController::class)->group(function(){
 
     Route::get('/admin/edit/coupon/{id}','AdminEditCoupon')->name('admin.edit.coupon');
     Route::post('/admin/update/coupon','AdminUpdateCoupon')->name('admin.update.coupon');
-    Route::get('/admin/delete/coupon/{id}','AdminDeleteCoupon')->name('admin.delete.coupon'); 
+    Route::get('/admin/delete/coupon/{id}','AdminDeleteCoupon')->name('admin.delete.coupon');
 });
     }); ///ُEnd Of Admin Middleware.
 
@@ -168,5 +168,12 @@ Route::controller(CartController::class)->group(function () {
     Route::get('/mycart', 'MyCart')->name('mycart');
     Route::get('/get-cart-course', 'GetCartCourse');
     Route::get('/cart-remove/{rowId}', 'CartRemove');
+    Route::post('/coupon-apply', [CartController::class, 'CouponApply']);
+    Route::get('/coupon-calculation', [CartController::class, 'CouponCalculation']);
+    Route::get('/coupon-remove', [CartController::class, 'CouponRemove']);
+
+    /// Checkout Page Route
+   Route::get('/checkout', [CartController::class, 'CheckoutCreate'])->name('checkout');
+
 });
 ///// End Route Accessable for All
