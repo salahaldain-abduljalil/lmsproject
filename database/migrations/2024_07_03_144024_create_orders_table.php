@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
             $table->integer('payment_id');
+            $table->foreignId('payment_id')->references('id')->on('payments')->onDelete('cascade')->onUpdate('cascade');
             $table->integer('user_id')->nullable();
             $table->integer('course_id')->nullable();
             $table->integer('instructor_id')->nullable();
