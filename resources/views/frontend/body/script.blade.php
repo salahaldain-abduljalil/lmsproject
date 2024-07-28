@@ -184,6 +184,57 @@
 </script>
 {{-- /// End Add To Cart  // --}}
 
+{{-- /// Start Buy Now Button  // --}}
+<script type="text/javascript">
+    function buyCourse(courseId, courseName, instructorId, slug) {
+        $.ajax({
+            type: "POST",
+            dataType: 'json',
+            data: {
+                _token: '{{ csrf_token() }}',
+                course_name: courseName,
+                course_name_slug: slug,
+                instructor: instructorId
+            },
+
+            url: "/buy/data/store/" + courseId,
+            success: function(data) {
+                miniCart();
+
+                // Start Message
+
+                const Toast = Swal.mixin({
+                    toast: true,
+                    position: 'top-end',
+                    showConfirmButton: false,
+                    timer: 3000
+                })
+                if ($.isEmptyObject(data.error)) {
+
+                    Toast.fire({
+                        type: 'success',
+                        icon: 'success',
+                        title: data.success,
+                    });
+                    // Redirect to the checkout page
+                    window.location.href = '/checkout';
+
+                } else {
+
+                    Toast.fire({
+                        type: 'error',
+                        icon: 'error',
+                        title: data.error,
+                    })
+                }
+
+                // End Message
+            }
+        });
+    }
+</script>
+{{-- /// End Buy Now Button  // --}}
+
 
 {{-- /// Start Mini Cart  // --}}
 <script type="text/javascript">
@@ -450,37 +501,37 @@
 
 {{-- /// Remove Coupon Start  // --}}
 <script type="text/javascript">
-    function couponRemove(){
+    function couponRemove() {
         $.ajax({
             type: "GET",
             dataType: 'json',
             url: '/coupon-remove',
-            success:function(data){
+            success: function(data) {
                 couponCalculation();
                 $('#couponField').show();
                 // Start Message
-const Toast = Swal.mixin({
-                  toast: true,
-                  position: 'top-end',
-                  showConfirmButton: false,
-                  timer: 3000
-            })
-            if ($.isEmptyObject(data.error)) {
+                const Toast = Swal.mixin({
+                    toast: true,
+                    position: 'top-end',
+                    showConfirmButton: false,
+                    timer: 3000
+                })
+                if ($.isEmptyObject(data.error)) {
 
                     Toast.fire({
-                    type: 'success',
-                    icon: 'success',
-                    title: data.success,
+                        type: 'success',
+                        icon: 'success',
+                        title: data.success,
                     })
-            }else{
+                } else {
 
-           Toast.fire({
-                    type: 'error',
-                    icon: 'error',
-                    title: data.error,
+                    Toast.fire({
+                        type: 'error',
+                        icon: 'error',
+                        title: data.error,
                     })
                 }
-              // End Message
+                // End Message
             }
         })
     }

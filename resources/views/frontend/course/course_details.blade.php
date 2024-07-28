@@ -108,13 +108,13 @@
                             <h3 class="fs-20 font-weight-semi-bold">Top companies trust Aduca</h3>
                             <p class="fs-15 pb-1">Get your team access to Aduca's top 5,000+ courses</p>
                             <div class="pb-3">
-                                <img width="85" class="mr-3"src="{{ asset('frontend/images') }}/sponsor-img.png"
+                                <img width="85" class="mr-3" src="{{ asset('frontend/images') }}/sponsor-img.png"
                                     alt="company logo">
-                                <img width="80" class="mr-3"src="{{ asset('frontend/images') }}/sponsor-img2.png"
+                                <img width="80" class="mr-3" src="{{ asset('frontend/images') }}/sponsor-img2.png"
                                     alt="company logo">
-                                <img width="80" class="mr-3"src="{{ asset('frontend/images') }}/sponsor-img3.png"
+                                <img width="80" class="mr-3" src="{{ asset('frontend/images') }}/sponsor-img3.png"
                                     alt="company logo">
-                                <img width="70" class="mr-3"src="{{ asset('frontend/images') }}/sponsor-img4.png"
+                                <img width="70" class="mr-3" src="{{ asset('frontend/images') }}/sponsor-img4.png"
                                     alt="company logo">
                             </div>
                             <a href="for-business.html" class="btn theme-btn theme-btn-sm">Try Aduca for Business</a>
@@ -177,7 +177,7 @@
                                                         {{ count($lecture) }} lectures</span>
                                                 </button>
                                             </div><!-- end card-header -->
-                                            <div id="collapse{{ $sec->id }}" class="collapse show"
+                                            <div id="collapse{{ $sec->id }}" class="collapse"
                                                 aria-labelledby="heading{{ $sec->id }}" data-parent="#accordion">
                                                 <div class="card-body">
                                                     <ul class="generic-list-item">
@@ -210,8 +210,8 @@
                                     <div class="instructor-img">
                                         <a href="teacher-detail.html" class="media-img d-block">
                                             <img class="lazy"
-                                                src="{{ !empty($course->user->photo) ? url('upload/instructor_images/' . $course->user->photo) : url('upload/no_image.jpg') }}"
-                                                data-src="images/small-avatar-1.jpg" alt="Avatar image">
+                                                 src="{{ !empty($course->user->photo) ? url('upload/instructor_images/' . $course->user->photo) : url('upload/no_image.jpg') }}"
+                                                data- src="images/small-avatar-1.jpg" alt="Avatar image">
                                         </a>
                                         <ul class="generic-list-item pt-3">
                                             <li><i class="la la-star mr-2 text-color-3"></i> 4.6 Instructor Rating</li>
@@ -358,8 +358,8 @@
                                 </div>
                                 <div class="media media-card border-bottom border-bottom-gray pb-4 mb-4">
                                     <div class="media-img mr-4 rounded-full">
-                                        <img class="rounded-full lazy"src="{{ asset('frontend/images') }}/img-loading.png"
-                                            data-src="images/small-avatar-1.jpg" alt="User image">
+                                        <img class="rounded-full lazy" src="{{ asset('frontend/images') }}/img-loading.png"
+                                            data- src="images/small-avatar-1.jpg" alt="User image">
                                     </div>
                                     <div class="media-body">
                                         <div class="d-flex flex-wrap align-items-center justify-content-between pb-1">
@@ -387,8 +387,8 @@
                                 </div><!-- end media -->
                                 <div class="media media-card border-bottom border-bottom-gray pb-4 mb-4">
                                     <div class="media-img mr-4 rounded-full">
-                                        <img class="rounded-full lazy"src="{{ asset($course->course_image) }}"
-                                            data-src="images/small-avatar-2.jpg" alt="User image">
+                                        <img class="rounded-full lazy" src="{{ asset($course->course_image) }}"
+                                            data- src="images/small-avatar-2.jpg" alt="User image">
                                     </div>
                                     <div class="media-body">
                                         <div class="d-flex flex-wrap align-items-center justify-content-between pb-1">
@@ -416,8 +416,8 @@
                                 </div><!-- end media -->
                                 <div class="media media-card border-bottom border-bottom-gray pb-4 mb-4">
                                     <div class="media-img mr-4 rounded-full">
-                                        <img class="rounded-full lazy"src="{{ asset('frontend/images') }}/img-loading.png"
-                                            data-src="images/small-avatar-3.jpg" alt="User image">
+                                        <img class="rounded-full lazy" src="{{ asset('frontend/images') }}/img-loading.png"
+                                            data- src="images/small-avatar-3.jpg" alt="User image">
                                     </div>
                                     <div class="media-body">
                                         <div class="d-flex flex-wrap align-items-center justify-content-between pb-1">
@@ -507,8 +507,8 @@
                             <div class="card-body">
                                 <div class="preview-course-video">
                                     <a href="javascript:void(0)" data-toggle="modal" data-target="#previewModal">
-                                        <img src="{{ asset($course->course_image) }}"
-                                            data-src="{{ asset($course->course_image) }}" alt="course-img"
+                                        <img  src="{{ asset($course->course_image) }}"
+                                            data- src="{{ asset($course->course_image) }}" alt="course-img"
                                             class="w-100 rounded lazy">
                                         <div class="preview-course-video-content">
                                             <div class="overlay"></div>
@@ -566,7 +566,7 @@
                                     <div class="buy-course-btn-box">
                                         <button type="submit" class="btn theme-btn w-100 mb-2" onclick="addToCart({{ $course->id }}, '{{ $course->course_name }}', '{{ $course->instructor_id }}', '{{ $course->course_name_slug }}' )" ><i class="la la-shopping-cart fs-18 mr-1"></i> Add to cart</button>
 
-                                        <button type="button" class="btn theme-btn w-100 theme-btn-white mb-2"><i class="la la-shopping-bag mr-1"></i> Buy this course</button>
+                                        <button type="button" class="btn theme-btn w-100 theme-btn-white mb-2"  onclick="buyCourse({{ $course->id }}, '{{ $course->course_name }}', '{{ $course->instructor_id }}', '{{ $course->course_name_slug }}' )"><i class="la la-shopping-bag mr-1"></i> Buy this course</button>
                                     </div>
                                     <p class="fs-14 text-center pb-4">30-Day Money-Back Guarantee</p>
                                     <div class="preview-course-incentives">
@@ -646,8 +646,8 @@
                                 @foreach ($relatedCourses as $related)
                                     <div class="media media-card border-bottom border-bottom-gray pb-4 mb-4">
                                         <a href="course-details.html" class="media-img">
-                                            <img class="mr-3 lazy" src="{{ asset($related->course_image) }}"
-                                                data-src="{{ asset($related->course_image) }}"
+                                            <img class="mr-3 lazy"  src="{{ asset($related->course_image) }}"
+                                                data- src="{{ asset($related->course_image) }}"
                                                 alt="Related course image">
                                         </a>
                                         <div class="media-body">
@@ -697,13 +697,14 @@
                         @php
                             $amount = $inscourse->selling_price - $inscourse->discount_price;
                             $discount = ($amount / $inscourse->selling_price) * 100;
+
                         @endphp
 
                         <div class="card card-item">
                             <div class="card-image">
                                 <a href="{{ url('course/details/' . $inscourse->id . '/' . $inscourse->course_name_slug) }}"
                                     class="d-block">
-                                    <img class="card-img-top" src="{{ asset($inscourse->course_image) }}"
+                                    <img class="card-img-top"  src="{{ asset($inscourse->course_image) }}"
                                         alt="Card image cap">
                                 </a>
                                 <div class="course-badge-labels">
@@ -758,7 +759,7 @@
                     <div class="card card-item">
                         <div class="card-image">
                             <a href="course-details.html" class="d-block">
-                                <img class="card-img-top"src="{{ asset('frontend/images') }}/img9.jpg"
+                                <img class="card-img-top" src="{{ asset('frontend/images') }}/img9.jpg"
                                     alt="Card image cap">
                             </a>
                             <div class="course-badge-labels">
@@ -905,7 +906,7 @@
                 <div class="modal-body">
                     <video controls crossorigin playsinline poster="{{ asset($course->course_image) }}" id="player">
                         <!-- Video files -->
-                        <source src="{{ asset($course->video) }}" type="video/mp4" />
+                        <source  src="{{ asset($course->video) }}" type="video/mp4" />
 
                     </video>
                 </div><!-- end modal-body -->

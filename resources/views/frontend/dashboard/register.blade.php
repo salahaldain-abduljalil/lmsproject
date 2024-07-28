@@ -1,8 +1,8 @@
 @extends('frontend.master')
 @section('home')
     <!-- ================================
-                START BREADCRUMB AREA
-            ================================= -->
+                    START BREADCRUMB AREA
+                ================================= -->
     <section class="breadcrumb-area section-padding img-bg-2">
         <div class="overlay"></div>
         <div class="container">
@@ -20,12 +20,12 @@
         </div><!-- end container -->
     </section><!-- end breadcrumb-area -->
     <!-- ================================
-                END BREADCRUMB AREA
-            ================================= -->
+                    END BREADCRUMB AREA
+                ================================= -->
 
     <!-- ================================
-                   START CONTACT AREA
-            ================================= -->
+                       START CONTACT AREA
+                ================================= -->
     <section class="contact-area section--padding position-relative">
         <span class="ring-shape ring-shape-1"></span>
         <span class="ring-shape ring-shape-2"></span>
@@ -43,7 +43,7 @@
                             </h3>
                             <div class="section-block"></div>
 
-                            <form method="POST" class="pt-4" action="{{ route('register') }}">
+                            <form action="{{ route('post.register') }}" method="POST" enctype="multipart/form-data" class="pt-4">
                                 @csrf
 
                                 <div class="d-flex flex-wrap align-items-center pb-4">
@@ -81,7 +81,7 @@
                                     <label class="label-text">Password</label>
                                     <div class="form-group">
                                         <input class="form-control form--control" id="password" type="password"
-                                            name="password" placeholder="Username">
+                                            name="password" placeholder="Enter Your Password">
                                         <span class="la la-user input-icon"></span>
                                     </div>
                                     <x-input-error :messages="$errors->get('password')" class="mt-2" />
@@ -115,8 +115,8 @@
                                                 policy</a>
                                         </label>
                                     </div><!-- end custom-control -->
-                                    <button class="btn theme-btn" type="submit">Register Account <i
-                                            class="la la-arrow-right icon ml-1"></i></button>
+                                    <button type="submit" class="btn theme-btn">Register Account <i
+                                            class="la la-arrow-right icon ml-1"></i> </button>
                                     <p class="fs-14 pt-2">Already have an account? <a href="{{ route('login') }}"
                                             class="text-color hover-underline">Log in</a></p>
                                 </div><!-- end btn-box -->
@@ -128,6 +128,6 @@
         </div><!-- end container -->
     </section><!-- end contact-area -->
     <!-- ================================
-                   END CONTACT AREA
-            ================================= -->
+                       END CONTACT AREA
+                ================================= -->
 @endsection

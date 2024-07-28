@@ -18,7 +18,7 @@
 
             @foreach ($categories as $category)
                 <li class="nav-item">
-                    <a class="nav-link" id="business" data-toggle="tab" href="#business{{ $category->id }}"
+                    <a class="nav-link" id="business-tab" data-toggle="tab" href="#business{{ $category->id }}"
                         role="tab" aria-controls="business-tab" aria-selected="false">{{ $category->category_name }}</a>
 
                 </li>
@@ -71,7 +71,7 @@
                                         <div class="card-body">
                                             <h6 class="ribbon ribbon-blue-bg fs-14 mb-3">{{ $course->label }}</h6>
                                             <h5 class="card-title"><a
-                                                    href="course-details.html">{{ $course->course_name }}</a></h5>
+                                                    href="#">{{ $course->course_name }}</a></h5>
                                             <p class="card-text"><a href="{{ route('instructor.details',$course->instructor_id) }}">{{ $course['user']['name'] }}</a></p>
                                             <div class="rating-wrap d-flex align-items-center py-2">
                                                 <div class="review-stars">
@@ -112,7 +112,7 @@
 
                             @forelse ($catwiseCourse as $course)
                                 <div class="col-lg-4 responsive-column-half">
-                                    <div class="card card-item card-preview" data-tooltip-content="#tooltip_content_1{{ $category->id }}">
+                                    <div class="card card-item card-preview" data-tooltip-content="#tooltip_content_1{{ $course->id }}">
                                         <div class="card-image">
                                             <img class="card-img-top lazy" src="{{ asset($course->course_image) }}"
                                                 data-src="images/img8.jpg" alt="Card image cap">
