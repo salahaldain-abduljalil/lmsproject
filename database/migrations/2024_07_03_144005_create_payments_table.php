@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('payments', function (Blueprint $table) {
-            $table->id();
+            $table->id()->nullable();
             $table->string('name')->nullable();
             $table->string('email')->nullable();
             $table->string('phone')->nullable();
@@ -24,7 +24,7 @@ return new class extends Migration
             $table->string('order_date')->nullable();
             $table->string('order_month')->nullable();
             $table->string('order_year')->nullable();
-            $table->string('status')->nullable(); 
+            $table->string('status')->nullable();
             $table->timestamps();
         });
     }
