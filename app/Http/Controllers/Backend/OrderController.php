@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
+use App\Models\CourseSection;
 use App\Models\Order;
 use App\Models\Payment;
 use Barryvdh\DomPDF\Facade\Pdf;
@@ -92,6 +93,17 @@ class OrderController extends Controller
         })->orderBy('latest_order.max_id','DESC')->get();
 
         return view('frontend.mycourse.my_all_course',compact('mycourse'));
+
+    }
+
+    public function CourseView($course_id){
+        $id = Auth::user()->id;
+
+        $course = Order::where('course_id',$course_id)->where('user_id',$id)->first();
+        $section = CourseSection::where('course_id',$course_id)->orderBy('id','asc')->get();
+
+        return view('frontend.mycourse.course_view',compact('course','section'));
+
 
     }
 }
