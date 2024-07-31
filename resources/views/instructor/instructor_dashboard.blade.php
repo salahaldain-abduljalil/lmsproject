@@ -80,6 +80,11 @@
     <!--app JS-->
     <script src="{{ asset('backend/assets/js/app.js') }}"></script>
 
+    <script>
+		new PerfectScrollbar('.chat-list');
+		new PerfectScrollbar('.chat-content');
+	</script>
+
 
     <script src="{{ asset('backend/assets/js/validate.min.js') }}"></script>
 

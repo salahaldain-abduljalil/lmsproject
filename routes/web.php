@@ -4,6 +4,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\Backend\CouponController;
 use App\Http\Controllers\Backend\CourseController;
 use App\Http\Controllers\Backend\OrderController;
+use App\Http\Controllers\Backend\QuestionController;
 use App\Http\Controllers\Backend\SettingController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\Frontend\CartController;
@@ -12,6 +13,7 @@ use App\Http\Controllers\InstructorController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\WishlistController;
 use Illuminate\Support\Facades\Route;
+
 
 
 /*
@@ -49,13 +51,17 @@ Route::middleware('auth')->group(function () {
         Route::get('/wishlist-remove/{id}', 'RemoveWishlist');
     });
 
-        // User My Course All Route
-        Route::controller(OrderController::class)->group(function(){
-            Route::get('/my/course','MyCourse')->name('my.course');
-            Route::get('/course/view/{course_id}','CourseView')->name('course.view');
+    // User My Course All Route
+    Route::controller(OrderController::class)->group(function () {
+        Route::get('/my/course', 'MyCourse')->name('my.course');
+        Route::get('/course/view/{course_id}', 'CourseView')->name('course.view');
+    });
 
-        });
-});////End Auth Middleware.
+    // User Question All Route
+    Route::controller(QuestionController::class)->group(function () {
+        Route::post('/user/question', 'UserQuestion')->name('user.question');
+    });
+}); ////End Auth Middleware.
 
 require __DIR__ . '/auth.php';
 
@@ -170,8 +176,15 @@ Route::middleware(['auth', 'role:instructor'])->group(function () {
     // Admin All Order Route
     Route::controller(OrderController::class)->group(function () {
         Route::get('/instructor/all/order', 'InstructorAllOrder')->name('instructor.all.order');
-        Route::get('/instructor/order/details/{payment_id}','InstructorOrderDetails')->name('instructor.order.details');
-        Route::get('/instructor/order/invoice/{payment_id}','InstructorOrderInvoice')->name('instructor.order.invoice');
+        Route::get('/instructor/order/details/{payment_id}', 'InstructorOrderDetails')->name('instructor.order.details');
+        Route::get('/instructor/order/invoice/{payment_id}', 'InstructorOrderInvoice')->name('instructor.order.invoice');
+    });
+
+    // Question All Order Route
+    Route::controller(QuestionController::class)->group(function () {
+        Route::get('/instructor/all/question', 'InstructorAllQuestion')->name('instructor.all.question');
+        Route::get('/question/details/{id}','QuestionDetails')->name('question.details');
+        Route::post('/instructor/replay','InstructorReplay')->name('instructor.replay');
 
     });
 }); ////End.
