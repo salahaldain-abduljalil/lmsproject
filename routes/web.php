@@ -5,6 +5,7 @@ use App\Http\Controllers\Backend\CouponController;
 use App\Http\Controllers\Backend\CourseController;
 use App\Http\Controllers\Backend\OrderController;
 use App\Http\Controllers\Backend\QuestionController;
+use App\Http\Controllers\Backend\ReportController;
 use App\Http\Controllers\Backend\SettingController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\Frontend\CartController;
@@ -14,6 +15,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\WishlistController;
 use App\Http\Middleware\RedirectIfAuthenticated;
 use Illuminate\Support\Facades\Route;
+
 
 
 
@@ -36,7 +38,7 @@ Route::get('/', [UserController::class, 'main'])->name('index');
 
 Route::get('/dashboard', function () {
     return view('frontend.dashboard.index');
-})->middleware(['auth','roles:user', 'verified'])->name('dashboard');
+})->middleware(['auth', 'role:user', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
     Route::get('/user/profile', [UserController::class, 'UserProfile'])->name('user.profile');
@@ -121,6 +123,14 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
             Route::get('/pending-confirm/{id}', 'PendingToConfirm')->name('pending-confirm');
             Route::get('/admin/confirm/order', 'AdminConfirmOrder')->name('admin.confirm.order');
         });
+
+        // Admin Report All Route
+        Route::controller(ReportController::class)->group(function () {
+            Route::get('/report/view', 'ReportView')->name('report.view');
+            Route::post('/search/by/date','SearchByDate')->name('search.by.date');
+            Route::post('/search/by/month','SearchByMonth')->name('search.by.month');
+            Route::post('/search/by/year','SearchByYear')->name('search.by.year');
+        });
     }); ///ُEnd Of Admin Middleware.
 
     // SubCategory All Route
@@ -184,9 +194,8 @@ Route::middleware(['auth', 'role:instructor'])->group(function () {
     // Question All Order Route
     Route::controller(QuestionController::class)->group(function () {
         Route::get('/instructor/all/question', 'InstructorAllQuestion')->name('instructor.all.question');
-        Route::get('/question/details/{id}','QuestionDetails')->name('question.details');
-        Route::post('/instructor/replay','InstructorReplay')->name('instructor.replay');
-
+        Route::get('/question/details/{id}', 'QuestionDetails')->name('question.details');
+        Route::post('/instructor/replay', 'InstructorReplay')->name('instructor.replay');
     });
 }); ////End.
 
@@ -218,6 +227,5 @@ Route::controller(CartController::class)->group(function () {
     Route::get('/checkout', [CartController::class, 'CheckoutCreate'])->name('checkout');
     Route::post('/payment', [CartController::class, 'Payment'])->name('payment');
     Route::post('/stripe_order', [CartController::class, 'StripeOrder'])->name('stripe_order');
-
 });
 ///// End Route Accessable for All
