@@ -12,6 +12,7 @@ use App\Http\Controllers\Frontend\IndexController;
 use App\Http\Controllers\InstructorController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\WishlistController;
+use App\Http\Middleware\RedirectIfAuthenticated;
 use Illuminate\Support\Facades\Route;
 
 
@@ -35,7 +36,7 @@ Route::get('/', [UserController::class, 'main'])->name('index');
 
 Route::get('/dashboard', function () {
     return view('frontend.dashboard.index');
-})->middleware(['auth', 'verified'])->name('dashboard');
+})->middleware(['auth','roles:user', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
     Route::get('/user/profile', [UserController::class, 'UserProfile'])->name('user.profile');
@@ -133,7 +134,7 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     });
 });
 
-Route::get('admin/login', [AdminController::class, 'adminLogin'])->name('admin.login');
+Route::get('admin/login', [AdminController::class, 'adminLogin'])->name('admin.login')->middleware(RedirectIfAuthenticated::class);
 ////instructor frontend Routes.
 Route::get('/become/instructor', [AdminController::class, 'BecomeInstructor'])->name('become.instructor');
 Route::post('/instructor/register', [AdminController::class, 'InstructorRegister'])->name('instructor.register');
@@ -190,7 +191,7 @@ Route::middleware(['auth', 'role:instructor'])->group(function () {
 }); ////End.
 
 /////Route Accessable for All.
-Route::get('/instructor/login', [InstructorController::class, 'InstructorLogin'])->name('instructor.login');
+Route::get('/instructor/login', [InstructorController::class, 'InstructorLogin'])->name('instructor.login')->middleware(RedirectIfAuthenticated::class);
 
 Route::get('/course/details/{id}/{slug}', [IndexController::class, 'CourseDetails']);
 Route::get('/category/{id}/{slug}', [IndexController::class, 'CategoryCourse']);

@@ -55,8 +55,12 @@ class UserController extends Controller
         $request->session()->invalidate();
 
         $request->session()->regenerateToken();
+        $notification = array(
+            'message' => 'Logout Successfully',
+            'alert-type' => 'info'
+        );
 
-        return redirect('/login');
+        return redirect('/login')->with($notification);
     }
     public function UserChangePassword(){
         return view('frontend.dashboard.change_password');
