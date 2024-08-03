@@ -6,6 +6,7 @@ use App\Http\Controllers\Backend\CourseController;
 use App\Http\Controllers\Backend\OrderController;
 use App\Http\Controllers\Backend\QuestionController;
 use App\Http\Controllers\Backend\ReportController;
+use App\Http\Controllers\Backend\ReviewController;
 use App\Http\Controllers\Backend\SettingController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\Frontend\CartController;
@@ -15,6 +16,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\WishlistController;
 use App\Http\Middleware\RedirectIfAuthenticated;
 use Illuminate\Support\Facades\Route;
+
 
 
 
@@ -238,5 +240,7 @@ Route::controller(CartController::class)->group(function () {
     Route::get('/checkout', [CartController::class, 'CheckoutCreate'])->name('checkout');
     Route::post('/payment', [CartController::class, 'Payment'])->name('payment');
     Route::post('/stripe_order', [CartController::class, 'StripeOrder'])->name('stripe_order');
+    Route::post('/store/review', [ReviewController::class, 'StoreReview'])->name('store.review');
+
 });
 ///// End Route Accessable for All
