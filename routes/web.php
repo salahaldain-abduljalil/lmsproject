@@ -230,6 +230,7 @@ Route::controller(CartController::class)->group(function () {
     Route::get('/get-cart-course', 'GetCartCourse');
     Route::get('/cart-remove/{rowId}', 'CartRemove');
     Route::post('/coupon-apply', [CartController::class, 'CouponApply']);
+    Route::post('/inscoupon-apply', [CartController::class, 'InsCouponApply']);
     Route::get('/coupon-calculation', [CartController::class, 'CouponCalculation']);
     Route::get('/coupon-remove', [CartController::class, 'CouponRemove']);
 

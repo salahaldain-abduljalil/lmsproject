@@ -395,7 +395,7 @@ class CartController extends Controller
         ]);
 
         $carts = Cart::content();
-         foreach ($carts as $cart) {
+        foreach ($carts as $cart) {
             Order::insert([
                 'payment_id' => $order_id,
                 'user_id' => Auth::user()->id,
@@ -404,17 +404,44 @@ class CartController extends Controller
                 'course_title' => $cart->options->name,
                 'price' => $cart->price,
             ]);
-         }// end foreach
+        } // end foreach
 
-         if (Session::has('coupon')) {
+        if (Session::has('coupon')) {
             Session::forget('coupon');
-         }
-         Cart::destroy();
+        }
+        Cart::destroy();
 
-         $notification = array(
+        $notification = array(
             'message' => 'Stripe Payment Submit Successfully',
             'alert-type' => 'success'
         );
-        return redirect()->route('index')->with($notification); 
+        return redirect()->route('index')->with($notification);
+    }
+
+    public function InsCouponApply(Request $request)
+    {
+
+        $coupon = Coupon::where('coupon_name', $request->coupon_name)->where('coupon_validity', '>=', Carbon::now()->format('Y-m-d'))->first();
+
+        if ($coupon) {
+            if ($coupon->course_id == $request->course_id && $coupon->instructor_id == $request->instructor_id) {
+
+                Session::put('coupon', [
+                    'coupon_name' => $coupon->coupon_name,
+                    'coupon_discount' => $coupon->coupon_discount,
+                    'discount_amount' => round(Cart::total() * $coupon->coupon_discount / 100),
+                    'total_amount' => round(Cart::total() - Cart::total() * $coupon->coupon_discount / 100)
+                ]);
+
+                return response()->json(array(
+                    'validity' => true,
+                    'success' => 'Coupon Applied Successfully'
+                ));
+            } else {
+                return response()->json(['error' => 'Coupon Criteria Not Met for this course and instructor']);
+            }
+        } else {
+            return response()->json(['error' => 'Invalid Coupon']);
+        }
     }
 }
