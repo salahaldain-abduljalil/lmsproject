@@ -2,8 +2,12 @@
 
 namespace App\Http\Middleware;
 
+use App\Models\User;
+use Carbon\Carbon;
 use Closure;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cache;
 use Symfony\Component\HttpFoundation\Response;
 
 class Role
@@ -15,6 +19,14 @@ class Role
      */
     public function handle(Request $request, Closure $next,$role): Response
     {
+      // to custom user Active or offline.
+      if (Auth::check()) {
+        $expireTime = Carbon::now()->addSeconds(30);
+        Cache::put('user-is-online' . Auth::user()->id, true, $expireTime);
+        User::where('id',Auth::user()->id)->update(['last_seen' => Carbon::now()]);
+     }
+
+
         $userRole = $request->user()->role;
 
         if ($userRole === 'user' && $role !== 'user' ) {

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\Backend\ActiveUserController;
 use App\Http\Controllers\Backend\CouponController;
 use App\Http\Controllers\Backend\CourseController;
 use App\Http\Controllers\Backend\OrderController;
@@ -16,6 +17,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\WishlistController;
 use App\Http\Middleware\RedirectIfAuthenticated;
 use Illuminate\Support\Facades\Route;
+
 
 
 
@@ -150,6 +152,12 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
         Route::get('/admin/pending/review', 'AdminPendingReview')->name('admin.pending.review');
         Route::post('/update/review/stauts', 'UpdateReviewStatus')->name('update.review.stauts');
         Route::get('/admin/active/review', 'AdminActiveReview')->name('admin.active.review');
+    });
+    // Admin All user and Instructor All Route
+    Route::controller(ActiveUserController::class)->group(function () {
+        Route::get('/all/user', 'AllUser')->name('all.user');
+        Route::get('/all/user','AllUser')->name('all.user');
+        Route::get('/all/instructor','AllInstructor')->name('all.instructor'); 
     });
 });
 
