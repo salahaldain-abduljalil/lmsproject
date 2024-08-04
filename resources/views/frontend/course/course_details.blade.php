@@ -28,45 +28,45 @@
                                 ->where('status', 1)
                                 ->latest()
                                 ->get();
-                            $avarage = App\Models\Review::where('course_id', $course->id)
+                            $average = App\Models\Review::where('course_id', $course->id)
                                 ->where('status', 1)
                                 ->avg('rating');
                         @endphp
                         <div class="rating-wrap d-flex flex-wrap align-items-center">
                             <div class="review-stars">
-                                <span class="rating-number">{{ round($avarage, 1) }}</span>
+                                <span class="rating-number">{{ round($average, 1) }}</span>
 
-                                @if ($avarage == 0)
+                                @if ($average == 0)
                                     <span class="la la-star-o"></span>
                                     <span class="la la-star-o"></span>
                                     <span class="la la-star-o"></span>
                                     <span class="la la-star-o"></span>
                                     <span class="la la-star-o"></span>
-                                @elseif ($avarage == 1 || $avarage < 2)
+                                @elseif ($average == 1 || $average < 2)
                                     <span class="la la-star"></span>
                                     <span class="la la-star-o"></span>
                                     <span class="la la-star-o"></span>
                                     <span class="la la-star-o"></span>
                                     <span class="la la-star-o"></span>
-                                @elseif ($avarage == 2 || $avarage < 3)
+                                @elseif ($average == 2 || $average < 3)
                                     <span class="la la-star"></span>
                                     <span class="la la-star"></span>
                                     <span class="la la-star-o"></span>
                                     <span class="la la-star-o"></span>
                                     <span class="la la-star-o"></span>
-                                @elseif ($avarage == 3 || $avarage < 4)
+                                @elseif ($average == 3 || $average < 4)
                                     <span class="la la-star"></span>
                                     <span class="la la-star"></span>
                                     <span class="la la-star"></span>
                                     <span class="la la-star-o"></span>
                                     <span class="la la-star-o"></span>
-                                @elseif ($avarage == 4 || $avarage < 5)
+                                @elseif ($average == 4 || $average < 5)
                                     <span class="la la-star"></span>
                                     <span class="la la-star"></span>
                                     <span class="la la-star"></span>
                                     <span class="la la-star"></span>
                                     <span class="la la-star-o"></span>
-                                @elseif ($avarage == 5 || $avarage < 5)
+                                @elseif ($average == 5 || $average < 5)
                                     <span class="la la-star"></span>
                                     <span class="la la-star"></span>
                                     <span class="la la-star"></span>
@@ -310,40 +310,40 @@
                             <div class="feedback-wrap">
                                 <div class="media media-card align-items-center">
                                     <div class="review-rating-summary">
-                                        <span class="stats-average__count">(10)</span>
+                                        <span class="stats-average__count">({{ round($average,1) }})</span>
                                         <div class="rating-wrap pt-1">
                                             <div class="review-stars">
-                                                @if ($avarage == 0)
+                                                @if ($average == 0)
                                                     <span class="la la-star-o"></span>
                                                     <span class="la la-star-o"></span>
                                                     <span class="la la-star-o"></span>
                                                     <span class="la la-star-o"></span>
                                                     <span class="la la-star-o"></span>
-                                                @elseif ($avarage == 1 || $avarage < 2)
+                                                @elseif ($average == 1 || $average < 2)
                                                     <span class="la la-star"></span>
                                                     <span class="la la-star-o"></span>
                                                     <span class="la la-star-o"></span>
                                                     <span class="la la-star-o"></span>
                                                     <span class="la la-star-o"></span>
-                                                @elseif ($avarage == 2 || $avarage < 3)
+                                                @elseif ($average == 2 || $average < 3)
                                                     <span class="la la-star"></span>
                                                     <span class="la la-star"></span>
                                                     <span class="la la-star-o"></span>
                                                     <span class="la la-star-o"></span>
                                                     <span class="la la-star-o"></span>
-                                                @elseif ($avarage == 3 || $avarage < 4)
+                                                @elseif ($average == 3 || $average < 4)
                                                     <span class="la la-star"></span>
                                                     <span class="la la-star"></span>
                                                     <span class="la la-star"></span>
                                                     <span class="la la-star-o"></span>
                                                     <span class="la la-star-o"></span>
-                                                @elseif ($avarage == 4 || $avarage < 5)
+                                                @elseif ($average == 4 || $average < 5)
                                                     <span class="la la-star"></span>
                                                     <span class="la la-star"></span>
                                                     <span class="la la-star"></span>
                                                     <span class="la la-star"></span>
                                                     <span class="la la-star-o"></span>
-                                                @elseif ($avarage == 5 || $avarage < 5)
+                                                @elseif ($average == 5 || $average < 5)
                                                     <span class="la la-star"></span>
                                                     <span class="la la-star"></span>
                                                     <span class="la la-star"></span>
@@ -770,10 +770,10 @@
 
                             @php
                             $reviewcount = App\Models\Review::where('course_id',$course->id)->where('status',1)->latest()->get();
-                            $avarage = App\Models\Review::where('course_id',$course->id)->where('status',1)->avg('rating');
+                            $average = App\Models\Review::where('course_id',$course->id)->where('status',1)->avg('rating');
 
                         @endphp
-                        
+
                             <div class="card-body">
                                 <h6 class="ribbon ribbon-blue-bg fs-14 mb-3">{{ $inscourse->label }}</h6>
                                 <h5 class="card-title"><a
@@ -783,38 +783,38 @@
                                 </p>
                                 <div class="rating-wrap d-flex align-items-center py-2">
                                     <div class="review-stars">
-                                        <span class="rating-number">{{ round($avarage, 1) }}</span>
-                                        @if ($avarage == 0)
+                                        <span class="rating-number">{{ round($average, 1) }}</span>
+                                        @if ($average == 0)
                                             <span class="la la-star-o"></span>
                                             <span class="la la-star-o"></span>
                                             <span class="la la-star-o"></span>
                                             <span class="la la-star-o"></span>
                                             <span class="la la-star-o"></span>
-                                        @elseif ($avarage == 1 || $avarage < 2)
+                                        @elseif ($average == 1 || $average < 2)
                                             <span class="la la-star"></span>
                                             <span class="la la-star-o"></span>
                                             <span class="la la-star-o"></span>
                                             <span class="la la-star-o"></span>
                                             <span class="la la-star-o"></span>
-                                        @elseif ($avarage == 2 || $avarage < 3)
+                                        @elseif ($average == 2 || $average < 3)
                                             <span class="la la-star"></span>
                                             <span class="la la-star"></span>
                                             <span class="la la-star-o"></span>
                                             <span class="la la-star-o"></span>
                                             <span class="la la-star-o"></span>
-                                        @elseif ($avarage == 3 || $avarage < 4)
+                                        @elseif ($average == 3 || $average < 4)
                                             <span class="la la-star"></span>
                                             <span class="la la-star"></span>
                                             <span class="la la-star"></span>
                                             <span class="la la-star-o"></span>
                                             <span class="la la-star-o"></span>
-                                        @elseif ($avarage == 4 || $avarage < 5)
+                                        @elseif ($average == 4 || $average < 5)
                                             <span class="la la-star"></span>
                                             <span class="la la-star"></span>
                                             <span class="la la-star"></span>
                                             <span class="la la-star"></span>
                                             <span class="la la-star-o"></span>
-                                        @elseif ($avarage == 5 || $avarage < 5)
+                                        @elseif ($average == 5 || $average < 5)
                                             <span class="la la-star"></span>
                                             <span class="la la-star"></span>
                                             <span class="la la-star"></span>

@@ -144,6 +144,13 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
         Route::post('/update/subcategory', 'UpdateSubCategory')->name('update.subcategory');
         Route::get('/delete/subcategory/{id}', 'DeleteSubCategory')->name('delete.subcategory');
     });
+
+    // Admin Review All Route
+    Route::controller(ReviewController::class)->group(function () {
+        Route::get('/admin/pending/review', 'AdminPendingReview')->name('admin.pending.review');
+        Route::post('/update/review/stauts','UpdateReviewStatus')->name('update.review.stauts');
+        Route::get('/admin/active/review','AdminActiveReview')->name('admin.active.review');
+    });
 });
 
 Route::get('admin/login', [AdminController::class, 'adminLogin'])->name('admin.login')->middleware(RedirectIfAuthenticated::class);
@@ -203,11 +210,11 @@ Route::middleware(['auth', 'role:instructor'])->group(function () {
     // Instructor Coupon All Route
     Route::controller(CouponController::class)->group(function () {
         Route::get('/instructor/all/coupon', 'InstructorAllCoupon')->name('instructor.all.coupon');
-        Route::get('/instructor/add/coupon','InstructorAddCoupon')->name('instructor.add.coupon');
-        Route::post('/instructor/store/coupon','InstructorStoreCoupon')->name('instructor.store.coupon');
-        Route::get('/instructor/edit/coupon/{id}','InstructorEditCoupon')->name('instructor.edit.coupon');
-        Route::post('/instructor/update/coupon','InstructorUpdateCoupon')->name('instructor.update.coupon');
-        Route::get('/instructor/delete/coupon/{id}','InstructorDeleteCoupon')->name('instructor.delete.coupon');
+        Route::get('/instructor/add/coupon', 'InstructorAddCoupon')->name('instructor.add.coupon');
+        Route::post('/instructor/store/coupon', 'InstructorStoreCoupon')->name('instructor.store.coupon');
+        Route::get('/instructor/edit/coupon/{id}', 'InstructorEditCoupon')->name('instructor.edit.coupon');
+        Route::post('/instructor/update/coupon', 'InstructorUpdateCoupon')->name('instructor.update.coupon');
+        Route::get('/instructor/delete/coupon/{id}', 'InstructorDeleteCoupon')->name('instructor.delete.coupon');
     });
 }); ////End.
 
@@ -241,6 +248,5 @@ Route::controller(CartController::class)->group(function () {
     Route::post('/payment', [CartController::class, 'Payment'])->name('payment');
     Route::post('/stripe_order', [CartController::class, 'StripeOrder'])->name('stripe_order');
     Route::post('/store/review', [ReviewController::class, 'StoreReview'])->name('store.review');
-
 });
 ///// End Route Accessable for All
