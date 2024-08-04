@@ -178,6 +178,24 @@
         </li>
 
 
+        <li>
+            <a class="has-arrow" href="javascript:;">
+                <div class="parent-icon"><i class='bx bx-bookmark-heart'></i>
+                </div>
+                <div class="menu-title">Manage Blog </div>
+            </a>
+            <ul>
+                <li> <a href="{{ route('blog.category') }}"><i class='bx bx-radio-circle'></i>Blog Category </a>
+                </li>
+                <li> <a href="{{ route('blog.post') }}"><i class='bx bx-radio-circle'></i>Blog Post</a>
+                </li>
+
+
+
+            </ul>
+        </li>
+
+
         <li class="menu-label">Charts & Maps</li>
         <li>
             <a class="has-arrow" href="javascript:;">
