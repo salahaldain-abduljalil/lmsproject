@@ -9,11 +9,14 @@ use App\Models\Coupon;
 use App\Models\Course;
 use App\Models\Order;
 use App\Models\Payment;
+use App\Models\User;
+use App\Notifications\OrderComplete;
 use Carbon\Carbon;
 use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Session;
 
 class CartController extends Controller
@@ -220,7 +223,7 @@ class CartController extends Controller
 
     public function Payment(Request $request)
     {
-
+        $user = User::where('role', 'instructor')->get();
         if (Session::has('coupon')) {
             $total_amount = Session::get('coupon')['total_amount'];
         } else {
@@ -297,11 +300,12 @@ class CartController extends Controller
                 'name' => $sendmail->name,
                 'email' => $sendmail->email,
             ];
+            /// Send Notification
+            Notification::send($user, new OrderComplete($request->name));
 
-            Mail::to($request->email)->send(new Orderconfirm($data));
-
-
+            @Mail::to($request->email)->send(new Orderconfirm($data));
             /// End Send email to Customer ///
+
 
             $notification = array(
                 'message' => 'Cash Payment Submit Successfully',
@@ -443,5 +447,17 @@ class CartController extends Controller
         } else {
             return response()->json(['error' => 'Invalid Coupon']);
         }
+    }
+
+    public function MarkAsRead(Request $request, $notificationId)
+    {
+
+        $user = Auth::user();
+        $notification = $user->notifications()->where('id', $notificationId)->first();
+
+        if ($notification) {
+            $notification->markAsRead();
+        }
+        return response()->json(['count' => $user->unreadNotifications()->count()]);
     }
 }

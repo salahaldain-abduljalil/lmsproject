@@ -16,9 +16,9 @@ class Orderconfirm extends Mailable
     /**
      * Create a new message instance.
      */
-    public function __construct(private $data)
+    public function __construct(public $data)
     {
-
+      $this->data = $data;
     }
 
     /**
@@ -50,6 +50,8 @@ class Orderconfirm extends Mailable
      */
     public function attachments(): array
     {
-        return [];
+        return [
+           'message' => 'you have this course now'
+        ];
     }
 }

@@ -285,6 +285,6 @@ Route::controller(CartController::class)->group(function () {
     Route::post('/stripe_order', [CartController::class, 'StripeOrder'])->name('stripe_order');
     Route::post('/store/review', [ReviewController::class, 'StoreReview'])->name('store.review');
     Route::get('/blog', [BlogController::class, 'BlogList'])->name('blog');
-
+    Route::post('/mark-notification-as-read/{notification}', [CartController::class, 'MarkAsRead']);
 });
 ///// End Route Accessable for All
