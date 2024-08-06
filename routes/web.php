@@ -9,6 +9,7 @@ use App\Http\Controllers\Backend\OrderController;
 use App\Http\Controllers\Backend\QuestionController;
 use App\Http\Controllers\Backend\ReportController;
 use App\Http\Controllers\Backend\ReviewController;
+use App\Http\Controllers\Backend\RoleController;
 use App\Http\Controllers\Backend\SettingController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\Frontend\CartController;
@@ -18,6 +19,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\WishlistController;
 use App\Http\Middleware\RedirectIfAuthenticated;
 use Illuminate\Support\Facades\Route;
+
 
 
 
@@ -127,8 +129,7 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
         // Site Setting All Route
         Route::controller(SettingController::class)->group(function () {
             Route::get('/site/setting', 'SiteSetting')->name('site.setting');
-            Route::post('/update/site','UpdateSite')->name('update.site');
-
+            Route::post('/update/site', 'UpdateSite')->name('update.site');
         });
         // Admin All Order Route
         Route::controller(OrderController::class)->group(function () {
@@ -188,6 +189,17 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
         Route::get('/delete/post/{id}', 'DeleteBlogPost')->name('delete.post');
         Route::get('/blog/details/{slug}', [BlogController::class, 'BlogDetails']);
         Route::get('/blog/cat/list/{id}', [BlogController::class, 'BlogCatList']);
+    });
+
+
+    // Blog Post All Route
+    Route::controller(RoleController::class)->group(function () {
+        Route::get('/all/permission', 'AllPermission')->name('all.permission');
+        Route::get('/add/permission', 'AddPermission')->name('add.permission');
+        Route::post('/store/permission', 'StorePermission')->name('store.permission');
+        Route::get('/edit/permission/{id}', 'EditPermission')->name('edit.permission');
+        Route::post('/update/permission', 'UpdatePermission')->name('update.permission');
+        Route::get('/delete/permission/{id}', 'DeletePermission')->name('delete.permission');
     });
 });
 
