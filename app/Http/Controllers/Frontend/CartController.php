@@ -453,11 +453,11 @@ class CartController extends Controller
     {
 
         $user = Auth::user();
-        $notification = $user->notifications()->where('id', $notificationId)->first();
+        $notification = $user->notifications->where('id', $notificationId)->first();
 
         if ($notification) {
             $notification->markAsRead();
         }
-        return response()->json(['count' => $user->unreadNotifications()->count()]);
+        return response()->json(['count' => $user->unreadNotifications->count()]);
     }
 }

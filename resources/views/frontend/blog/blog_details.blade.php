@@ -1,8 +1,11 @@
 @extends('frontend.master')
+@section('title')
+    {{ $blog->post_title }} | Easy Learning
+@endsection
 @section('home')
     <!-- ================================
-        START BREADCRUMB AREA
-    ================================= -->
+            START BREADCRUMB AREA
+        ================================= -->
     <section class="breadcrumb-area pt-80px pb-80px pattern-bg">
         <div class="container">
             <div class="breadcrumb-content">
@@ -25,12 +28,12 @@
         </div><!-- end container -->
     </section><!-- end breadcrumb-area -->
     <!-- ================================
-        END BREADCRUMB AREA
-    ================================= -->
+            END BREADCRUMB AREA
+        ================================= -->
 
     <!-- ================================
-           START BLOG AREA
-    ================================= -->
+               START BLOG AREA
+        ================================= -->
     <section class="blog-area pt-100px pb-100px">
         <div class="container">
             <div class="row">
@@ -215,8 +218,8 @@
                                 <div class="divider"><span></span></div>
                                 <ul class="generic-list-item">
                                     @foreach ($bcategory as $cat)
-                                    <li><a href="{{ url('blog/cat/list/'.$cat->id) }}">{{ $cat->category_name }}</a></li>
-
+                                        <li><a href="{{ url('blog/cat/list/' . $cat->id) }}">{{ $cat->category_name }}</a>
+                                        </li>
                                     @endforeach
                                 </ul>
                             </div>
@@ -226,17 +229,20 @@
                                 <h3 class="card-title fs-18 pb-2">Recent Posts</h3>
                                 <div class="divider"><span></span></div>
                                 @foreach ($post as $dpost)
-                                <div class="media media-card border-bottom border-bottom-gray pb-4 mb-4">
-                                    <a href="{{ url('blog/details/'.$dpost->post_slug) }}" class="media-img">
-                                        <img class="mr-3" src="{{ asset($dpost->post_image) }}" alt="Related course image">
-                                    </a>
-                                    <div class="media-body">
-                                        <h5 class="fs-15"><a href="{{ url('blog/details/'.$dpost->post_slug) }}">{{ $dpost->post_title }}</a></h5>
+                                    <div class="media media-card border-bottom border-bottom-gray pb-4 mb-4">
+                                        <a href="{{ url('blog/details/' . $dpost->post_slug) }}" class="media-img">
+                                            <img class="mr-3" src="{{ asset($dpost->post_image) }}"
+                                                alt="Related course image">
+                                        </a>
+                                        <div class="media-body">
+                                            <h5 class="fs-15"><a
+                                                    href="{{ url('blog/details/' . $dpost->post_slug) }}">{{ $dpost->post_title }}</a>
+                                            </h5>
 
-                                        <span class="d-block lh-18 py-1 fs-14">Admin</span>
-                                        <p class="text-black font-weight-semi-bold lh-18 fs-15">Free</p>
-                                    </div>
-                                </div><!-- end media -->
+                                            <span class="d-block lh-18 py-1 fs-14">Admin</span>
+                                            <p class="text-black font-weight-semi-bold lh-18 fs-15">Free</p>
+                                        </div>
+                                    </div><!-- end media -->
                                 @endforeach
                                 <div class="view-all-course-btn-box">
                                     <a href="blog-no-sidebar.html" class="btn theme-btn w-100">View All Posts <i
@@ -302,6 +308,6 @@
         </div><!-- end container -->
     </section><!-- end blog-area -->
     <!-- ================================
-           START BLOG AREA
-    ================================= -->
+               START BLOG AREA
+        ================================= -->
 @endsection

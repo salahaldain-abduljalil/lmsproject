@@ -117,10 +117,18 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
             Route::get('/admin/delete/coupon/{id}', 'AdminDeleteCoupon')->name('admin.delete.coupon');
         });
 
-        // Category All Route
+        // SMTP All Route
         Route::controller(SettingController::class)->group(function () {
             Route::get('/smtp/setting', 'SmtpSetting')->name('smtp.setting');
             Route::post('/update/smtp', 'SmtpUpdate')->name('update.smtp');
+        });
+
+
+        // Site Setting All Route
+        Route::controller(SettingController::class)->group(function () {
+            Route::get('/site/setting', 'SiteSetting')->name('site.setting');
+            Route::post('/update/site','UpdateSite')->name('update.site');
+
         });
         // Admin All Order Route
         Route::controller(OrderController::class)->group(function () {
@@ -173,11 +181,11 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     // Blog Post All Route
     Route::controller(BlogController::class)->group(function () {
         Route::get('/blog/post', 'BlogPost')->name('blog.post');
-        Route::get('/add/blog/post','AddBlogPost')->name('add.blog.post');
-        Route::post('/store/blog/post','StoreBlogPost')->name('store.blog.post');
-        Route::get('/edit/post/{id}','EditBlogPost')->name('edit.post');
-        Route::post('/update/blog/post','UpdateBlogPost')->name('update.blog.post');
-        Route::get('/delete/post/{id}','DeleteBlogPost')->name('delete.post');
+        Route::get('/add/blog/post', 'AddBlogPost')->name('add.blog.post');
+        Route::post('/store/blog/post', 'StoreBlogPost')->name('store.blog.post');
+        Route::get('/edit/post/{id}', 'EditBlogPost')->name('edit.post');
+        Route::post('/update/blog/post', 'UpdateBlogPost')->name('update.blog.post');
+        Route::get('/delete/post/{id}', 'DeleteBlogPost')->name('delete.post');
         Route::get('/blog/details/{slug}', [BlogController::class, 'BlogDetails']);
         Route::get('/blog/cat/list/{id}', [BlogController::class, 'BlogCatList']);
     });

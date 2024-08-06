@@ -1,4 +1,7 @@
 @extends('frontend.master')
+@section('title')
+{{ $category->category_name }} | Easy Learning
+@endsection
 @section('home')
 <!-- ================================
     START BREADCRUMB AREA

@@ -1,4 +1,7 @@
 @extends('admin.admin_dashboard')
+@section('title')
+    {{ $course->course_name }} | Easy Learning
+@endsection
 @section('content')
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 
@@ -90,20 +93,20 @@
                                         <tr>
                                             <td><strong>Selling Price :</strong> </td>
                                             <td> ${{ $course->selling_price }}</td>
-                                            <tr>
-                                                <td><strong> Discount Price :</strong> </td>
-                                                <td>${{ $course->discount_price }}</td>
-                                            </tr>
-                                            <tr>
-                                                <td><strong>Status :</strong> </td>
-                                                <td>
-                                                    @if ($course->status == 1)
+                                        <tr>
+                                            <td><strong> Discount Price :</strong> </td>
+                                            <td>${{ $course->discount_price }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Status :</strong> </td>
+                                            <td>
+                                                @if ($course->status == 1)
                                                     <span class="badge bg-success">Active</span>
-                                                    @else
+                                                @else
                                                     <span class="badge bg-danger">Inactive</span>
-                                                    @endif
-                                                </td>
-                                            </tr>
+                                                @endif
+                                            </td>
+                                        </tr>
                                     </tbody>
                                 </table>
                             </div>
