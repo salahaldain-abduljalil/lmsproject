@@ -15,6 +15,10 @@
             <div class="ms-auto">
                 <div class="btn-group">
                     <a href="{{ route('add.permission') }}" class="btn btn-primary px-5">Add Permission</a>
+                    &nbsp;&nbsp;
+                    <a href="{{ route('import.permission') }}" class="btn btn-warning ">Import </a>
+                    &nbsp;&nbsp;
+                    <a href="{{ route('export') }}" class="btn btn-danger ">Export </a>
                 </div>
             </div>
         </div>
@@ -40,7 +44,8 @@
                                     <td> {{ $per->name }} </td>
                                     <td>{{ $per->group_name }}</td>
                                     <td>
-                                        <a href="{{ route('edit.permission',$per->id) }}" class="btn btn-info px-5">Edit </a>
+                                        <a href="{{ route('edit.permission', $per->id) }}" class="btn btn-info px-5">Edit
+                                        </a>
                                         <a href="{{ route('delete.permission', $per->id) }}" class="btn btn-danger px-5"
                                             id="delete">Delete </a>
                                     </td>
