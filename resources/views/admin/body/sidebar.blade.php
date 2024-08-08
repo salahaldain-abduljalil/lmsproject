@@ -38,20 +38,24 @@
         </li>
 
         <li class="menu-label">UI Elements</li>
+        @if (Auth::user()->can('category.menu'))
+            <li>
+                <a href="javascript:;" class="has-arrow">
+                    <div class="parent-icon"><i class='bx bx-cart'></i>
+                    </div>
+                    <div class="menu-title">Manage Category</div>
+                </a>
+                <ul>
+                    <li> <a href="{{ route('all.category') }}"><i class='bx bx-radio-circle'></i>All Category</a>
+                    </li>
+                    <li> <a href="{{ route('all.subcategory') }}"><i class='bx bx-radio-circle'></i>All SubCategory</a>
+                    </li>
+                </ul>
+            </li>
+        @endif
         <li>
-            <a href="javascript:;" class="has-arrow">
-                <div class="parent-icon"><i class='bx bx-cart'></i>
-                </div>
-                <div class="menu-title">Manage Category</div>
-            </a>
-            <ul>
-                <li> <a href="{{ route('all.category') }}"><i class='bx bx-radio-circle'></i>All Category</a>
-                </li>
-                <li> <a href="{{ route('all.subcategory') }}"><i class='bx bx-radio-circle'></i>All SubCategory</a>
-                </li>
-            </ul>
-        </li>
-        <li>
+            @if(Auth::user()->can('instructor.menu'))
+
             <a class="has-arrow" href="javascript:;">
                 <div class="parent-icon"><i class='bx bx-bookmark-heart'></i>
                 </div>
@@ -61,6 +65,7 @@
                 <li> <a href="{{ route('all.instructor') }}"><i class='bx bx-radio-circle'></i>All Instructors</a>
                 </li>
             </ul>
+            @endif
 
         </li>
 
@@ -212,7 +217,8 @@
                 <li> <a href="{{ route('add.roles.permission') }}"><i class='bx bx-radio-circle'></i>Role In
                         Permission</a>
                 </li>
-                    <li> <a href="{{ route('all.roles.permission') }}"><i class='bx bx-radio-circle'></i>All Role In Permission</a>
+                <li> <a href="{{ route('all.roles.permission') }}"><i class='bx bx-radio-circle'></i>All Role In
+                        Permission</a>
                 </li>
                 <li> <a href="charts-chartjs.html"><i class='bx bx-radio-circle'></i>Chartjs</a>
                 </li>

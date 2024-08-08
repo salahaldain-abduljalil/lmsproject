@@ -87,7 +87,7 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::post('/admin/password/update', [AdminController::class, 'AdminPasswordUpdate'])->name('admin.password.update');
 
     // Category All Route
-    Route::controller(CategoryController::class)->group(function () {
+    Route::controller(CategoryController::class)->middleware('permission:category.menu')->group(function () {
         Route::get('/all/category', 'AllCategory')->name('all.category');
         Route::get('/add/category', 'AddCategory')->name('add.category');
         Route::post('/store/category', 'StoreCategory')->name('store.category');
