@@ -156,9 +156,9 @@
             </div><!-- end col-lg-6 -->
             <div class="col-lg-5 ml-auto">
                 <div class="generic-img-box">
-                    <img src="{{asset('frontend.images')}}/img-loading.png" data-src="{{asset('frontend.images')}}/img13.jpg" alt="About image"
+                    <img src="{{asset('frontend/images')}}/img-loading.png" data-src="{{asset('frontend/images')}}/img13.jpg" alt="About image"
                         class="img__item img__item-1 lazy">
-                    <img src="{{asset('frontend.images')}}/img-loading.png" data-src="{{asset('frontend.images')}}/img14.jpg" alt="About image"
+                    <img src="{{asset('frontend/images')}}/img-loading.png" data-src="{{asset('frontend/images')}}/img14.jpg" alt="About image"
                         class="img__item img__item-2 lazy">
                 </div><!-- end generic-img-box -->
             </div><!-- end col-lg-5 -->
