@@ -10,6 +10,7 @@
 
 
     <title>@yield('title')</title>
+    @vite(['resources/js/app.js'])
 
     <!-- Google fonts -->
     <link rel="preconnect" href="https://fonts.gstatic.com">
@@ -31,7 +32,7 @@
     <link rel="stylesheet" href="{{ asset('frontend/css/plyr.css') }}">
 
     <!-- end inject -->
-    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css" >
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css">
 
 </head>
 
@@ -96,31 +97,29 @@
 
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 
-<script>
- @if(Session::has('message'))
- var type = "{{ Session::get('alert-type','info') }}"
- switch(type){
-    case 'info':
-    toastr.info(" {{ Session::get('message') }} ");
-    break;
-    case 'success':
-    toastr.success(" {{ Session::get('message') }} ");
-    break;
-    case 'warning':
-    toastr.warning(" {{ Session::get('message') }} ");
-    break;
-    case 'error':
-    toastr.error(" {{ Session::get('message') }} ");
-    break;
- }
- @endif
-</script>
+    <script>
+        @if (Session::has('message'))
+            var type = "{{ Session::get('alert-type', 'info') }}"
+            switch (type) {
+                case 'info':
+                    toastr.info(" {{ Session::get('message') }} ");
+                    break;
+                case 'success':
+                    toastr.success(" {{ Session::get('message') }} ");
+                    break;
+                case 'warning':
+                    toastr.warning(" {{ Session::get('message') }} ");
+                    break;
+                case 'error':
+                    toastr.error(" {{ Session::get('message') }} ");
+                    break;
+            }
+        @endif
+    </script>
 
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
-@include('frontend.body.script')
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    @include('frontend.body.script')
 
 </body>
 
 </html>
-
-

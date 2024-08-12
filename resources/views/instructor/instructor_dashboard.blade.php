@@ -18,7 +18,7 @@
     <link href="{{ asset('backend/assets/css/pace.min.css') }}" rel="stylesheet" />
     <script src="{{ asset('backend/assets/js/pace.min.js') }}"></script>
     <!-- Bootstrap CSS -->
-
+    @vite(['resources/js/app.js'])
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <link href="{{ asset('backend/assets/css/bootstrap.min.css') }}" rel="stylesheet">

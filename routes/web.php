@@ -3,6 +3,7 @@
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\Backend\ActiveUserController;
 use App\Http\Controllers\Backend\BlogController;
+use App\Http\Controllers\Backend\ChatController;
 use App\Http\Controllers\Backend\CouponController;
 use App\Http\Controllers\Backend\CourseController;
 use App\Http\Controllers\Backend\OrderController;
@@ -19,6 +20,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\WishlistController;
 use App\Http\Middleware\RedirectIfAuthenticated;
 use Illuminate\Support\Facades\Route;
+
 
 
 
@@ -172,7 +174,7 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
             Route::post('/store/admin', 'StoreAdmin')->name('store.admin');
             Route::get('/edit/admin/{id}', 'EditAdmin')->name('edit.admin');
             Route::post('/update/admin/{id}', 'UpdateAdmin')->name('update.admin');
-            Route::get('/delete/admin/{id}','DeleteAdmin')->name('delete.admin');
+            Route::get('/delete/admin/{id}', 'DeleteAdmin')->name('delete.admin');
         });
     }); ///ُEnd Of Admin Middleware.
 
@@ -337,5 +339,12 @@ Route::controller(CartController::class)->group(function () {
     Route::post('/store/review', [ReviewController::class, 'StoreReview'])->name('store.review');
     Route::get('/blog', [BlogController::class, 'BlogList'])->name('blog');
     Route::post('/mark-notification-as-read/{notification}', [CartController::class, 'MarkAsRead']);
+
+    // Chat Post Request Route
+    Route::post('/send-message', [ChatController::class, 'SendMessage']);
+    Route::get('/live/chat', [UserController::class, 'LiveChat'])->name('live.chat');
+    Route::get('/user-all', [ChatController::class, 'GetAllUsers']);
+    Route::get('/user-message/{id}', [ChatController::class, 'UserMsgById']);
+    Route::get('/instructor/live/chat', [ChatController::class, 'LiveChat'])->name('instructor.live.chat');
 });
 ///// End Route Accessable for All
