@@ -66,7 +66,7 @@
                         <li class="buyer clearfix" v-else>
                             <span class="chat-img right clearfix mx-2">
                                 <img
-                                    src="'/upload/user_images/'+msg.user.photo"
+                                    :src="'/upload/user_images/'+msg.user.photo"
                                     class="userImg"
                                     alt="userImg"
                                 />
@@ -76,7 +76,7 @@
                                     <small class="left text-muted">{{
                                         formatDate(msg.created_at)
                                     }}</small>
-                                    <!-- <strong class="right primary-font">{{msg.user.name}}</strong> //my name   -->
+                                    <strong class="right primary-font">{{msg.user.name}}</strong> //my name
                                 </div>
                                 <p>{{ msg.msg }}</p>
                             </div>
@@ -98,8 +98,7 @@
                         />
                         <span class="input-group-btn">
                             <button
-                                class="btn btn-primary"
-                                @click.prevent="sendMsg()"
+                                class="btn btn-primary" @click.prevent="sendMsg()"
                             >
                                 Send
                         </button>
@@ -117,8 +116,8 @@ export default {
         return {
             users: {},
             allmessages: {},
-            selectedUser: "",
-            msg: "",
+            selectedUser: '',
+            msg: '',
         };
     },
     created() {

@@ -22,13 +22,6 @@ use App\Http\Middleware\RedirectIfAuthenticated;
 use Illuminate\Support\Facades\Route;
 
 
-
-
-
-
-
-
-
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -345,6 +338,6 @@ Route::controller(CartController::class)->group(function () {
     Route::get('/live/chat', [UserController::class, 'LiveChat'])->name('live.chat');
     Route::get('/user-all', [ChatController::class, 'GetAllUsers']);
     Route::get('/user-message/{id}', [ChatController::class, 'UserMsgById']);
-    Route::get('/instructor/live/chat', [ChatController::class, 'LiveChat'])->name('instructor.live.chat');
+   Route::get('/instructor/live/chat', [ChatController::class, 'LiveChat'])->name('instructor.live.chat');
 });
 ///// End Route Accessable for All
