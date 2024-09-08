@@ -13,6 +13,8 @@ use App\Http\Controllers\Backend\ReviewController;
 use App\Http\Controllers\Backend\RoleController;
 use App\Http\Controllers\Backend\SettingController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\Chat\Messenger;
+use App\Http\Controllers\Chat\UserProfileController;
 use App\Http\Controllers\Frontend\CartController;
 use App\Http\Controllers\Frontend\IndexController;
 use App\Http\Controllers\InstructorController;
@@ -20,8 +22,6 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\WishlistController;
 use App\Http\Middleware\RedirectIfAuthenticated;
 use Illuminate\Support\Facades\Route;
-
-
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -341,3 +341,15 @@ Route::controller(CartController::class)->group(function () {
    Route::get('/instructor/live/chat', [ChatController::class, 'LiveChat'])->name('instructor.live.chat');
 });
 ///// End Route Accessable for All
+
+
+////All Route For the Chat Application.
+
+Route::middleware(['auth'])->group(function(){
+
+    Route::get('/messenger',[Messenger::class,'index'])->name('home');
+    Route::post('/profile',[UserProfileController::class,'update'])->name('profile.update');
+
+});
+
+

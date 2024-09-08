@@ -24,6 +24,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'user_name',
     ];
 
     /**
@@ -68,7 +69,7 @@ class User extends Authenticatable
 
         return $permissions;
     }
-    
+
     public static function roleHasPermissions($role, $permissions)
     {
 

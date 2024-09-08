@@ -66,7 +66,7 @@
                         <li class="buyer clearfix" v-else>
                             <span class="chat-img right clearfix mx-2">
                                 <img
-                                    :src="'/upload/user_images/'+msg.user.photo"
+                                    :src="'/upload/user_images/'+ msg.user.photo"
                                     class="userImg"
                                     alt="userImg"
                                 />

@@ -72,11 +72,11 @@ export default {
             errors: {},
             succMessage: {},
         };
-        },
-    methods:{
+    },
+    methods: {
         sendMsg() {
-
-            axios.post("/send-message", this.form)
+            axios
+                .post("/send-message", this.form)
                 .then((res) => {
                     this.form.msg = "";
                     this.succMessage = res.data;
@@ -84,10 +84,8 @@ export default {
                 })
                 .catch((err) => {
                     this.errors = err.response.data.errors;
-
-              });
-
-        }
+                })
+        },
     },
 };
 </script>
