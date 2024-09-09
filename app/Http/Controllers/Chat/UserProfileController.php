@@ -38,6 +38,7 @@ class UserProfileController extends Controller
         }
         $user->save();
 
+        
         notyf()->addSuccess('Updated Successfully');
 
         return response(['message' => 'Updated Successfully'], 200);

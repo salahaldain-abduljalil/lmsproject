@@ -349,7 +349,9 @@ Route::middleware(['auth'])->group(function(){
 
     Route::get('/messenger',[Messenger::class,'index'])->name('home');
     Route::post('/profile',[UserProfileController::class,'update'])->name('profile.update');
+   //search route
 
+   Route::get('messenger/search',[Messenger::class, 'search'])->name('messenger.search');
 });
 
 
