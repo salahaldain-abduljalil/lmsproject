@@ -352,6 +352,9 @@ Route::middleware(['auth'])->group(function(){
    //search route
 
    Route::get('messenger/search',[Messenger::class, 'search'])->name('messenger.search');
+   //fetch user by id.
+   Route::get('messenger/id-info',[Messenger::class, 'fetchIdinfo'])->name('messenger.id-info');
+
 });
 
 

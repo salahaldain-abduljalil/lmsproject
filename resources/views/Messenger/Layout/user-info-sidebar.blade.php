@@ -4,12 +4,13 @@
         <span class="user_info_close"><i class="far fa-times"></i></span>
     </div>
 
-    <div class="wsus__chat_info_details">
+    <div class="wsus__chat_info_details user-info-view">
         <div class="user_photo">
             <img src="{{ asset('chatasset/css') }}images/author_img_2.jpg" alt="User" class="img-fluid">
         </div>
         <h3 class="user_name">Hasan Masud</h3>
-        <a href="#" class="delete_chat">Delete Conversation</a>
+        <span class="user-unique-name"></span>
+        {{-- <a href="#" class="delete_chat">Delete Conversation</a> --}}
         <p class="photo_gallery">Shared Photos</p>
         <span class="nothing_share">Nothing shared yet</span>
 

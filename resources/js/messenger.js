@@ -1,7 +1,12 @@
 /**
  * Reuseable Functions.
  */
-
+function enableChatboxloader(){
+    $(".wsus__message_paceholder").removeClass('d-none');
+}
+function disableChatboxloader(){
+    $(".wsus__message_paceholder").addClass('d-none');
+}
 function imagePreview(input, selector) {
     if (input.files && input.files[0]) {
         var render = new FileReader();
@@ -81,6 +86,33 @@ function debounce(callback, delay) {
 
 /**
  * --------------------
+ * Fetch id data of user and update the view.
+ * --------------------
+ */
+function IDinfo(id) {
+    $.ajax({
+        method: "GET",
+        url: "/messenger/id-info",
+        beforeSend: function(){
+            NProgress.start();//to start work with nprogress npm.
+            enableChatboxloader();
+        },
+        data: {id:id},
+        success: function (data) {
+            $(".messenger-header").find("img").attr("src",data.fetch.avatar);
+            $(".messenger-header").find("h4").text(data.fetch.name);
+            $(".user-info-view .user_photo").find("img").attr("src",data.fetch.avatar);
+            $(".user-info-view .user_photo").find(".user_name").text(data.fetch.name);
+            $(".user-info-view").find(".user-unique-name").text(data.fetch.name);
+            NProgress.done();//here if the data is loaded the progress will go away.
+            disableChatboxloader();
+        },
+        error: function (xhr, status, error) {},
+    });
+}
+
+/**
+ * --------------------
  * On Dom Load.
  * --------------------
  */
@@ -106,5 +138,11 @@ $(document).ready(function () {
     actiononScroll(".user_search_list_result", function () {
         let value = $(".user_search").val();
         searchUsers(value);
+    });
+
+    //click action for messenger list item of users.
+    $("body").on("click", ".messenger-list-item", function () {
+        const dataId = $(this).attr("data-id");
+        IDinfo(dataId);
     });
 });

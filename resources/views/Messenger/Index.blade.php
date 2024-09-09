@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="{{ asset('chatasset/css') }}/slick.css">
     <link rel="stylesheet" href="{{ asset('chatasset/css') }}/venobox.min.css">
     <link rel="stylesheet" href="{{ asset('chatasset/css') }}/emojionearea.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/nprogress@0.2.0/nprogress.css">
 
     <link rel="stylesheet" href="{{ asset('chatasset/css') }}/spacing.css">
     <link rel="stylesheet" href="{{ asset('chatasset/css') }}/style.css">
@@ -50,6 +51,7 @@
     <!--main/custom js-->
     <script src="{{ asset('chatasset') }}/js/main.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.js"></script>
+    <script src="https://unpkg.com/nprogress@0.2.0/nprogress.js"></script>
     <script>
         var notyf = new Notyf({
             duration: 5000,

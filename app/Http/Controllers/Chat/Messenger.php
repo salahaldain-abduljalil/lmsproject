@@ -39,4 +39,12 @@ class Messenger extends Controller
             'last_page' => $records->lastPage(),//for the pagination.
         ]);
     }
+
+    public function fetchIdinfo(Request $request){
+
+        $fetch = User::where('id',$request['id'])->first();
+        return response()->json([
+            'fetch'=>$fetch
+        ]);
+    }
 }
