@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Chat;
 
 use App\Http\Controllers\Controller;
+use App\Models\User;
 use App\Traits\FileUploadTrait;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -20,7 +21,7 @@ class UserProfileController extends Controller
             'email' => ['required', 'email', 'max:100'],
         ]);
         $avatarpath = $this->uploadFile($request, 'avatar');
-        $user = Auth::user();
+        $user = auth()->user()->id;
         if ($avatarpath) {
             $user->avatar = $avatarpath;
         }
@@ -38,7 +39,7 @@ class UserProfileController extends Controller
         }
         $user->save();
 
-        
+
         notyf()->addSuccess('Updated Successfully');
 
         return response(['message' => 'Updated Successfully'], 200);

@@ -8,13 +8,5 @@ export default defineConfig({
             input: ["resources/css/app.css", "resources/js/app.js","resources/js/messenger.js"],
             refresh: true,
         }),
-        vue({
-            template: {
-                transformAssetUrls: {
-                    base: null,
-                    includeAbsolute: false,
-                },
-            },
-        }),
     ],
 });

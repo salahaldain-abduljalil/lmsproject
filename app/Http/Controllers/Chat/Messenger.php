@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Chat;
 
 use App\Http\Controllers\Controller;
+use App\Models\Message;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -44,7 +45,33 @@ class Messenger extends Controller
 
         $fetch = User::where('id',$request['id'])->first();
         return response()->json([
-            'fetch'=>$fetch
+            'fetch'=> $fetch
         ]);
+    }
+
+    public function sendMessage(Request $request){
+        $request->validate([
+            'message'=>['required'],
+            'id'  => ['required','integer'],
+            'temporaryMsgId' =>['required']
+
+        ]);
+
+        $message = new Message();
+        $message->form_id = Auth::user()->id;
+        $message->to_id = $request->id;
+        $message->body = $request->message;
+        $message->save();
+
+        return response()->json([
+            'message'=> $this->messageCard($message),
+            'tempID' => 'temporaryMsgId'
+        ]);
+
+    }
+
+    public function messageCard($message){
+
+        return view('Messenger.Components.message-card',compact('message'))->render();
     }
 }

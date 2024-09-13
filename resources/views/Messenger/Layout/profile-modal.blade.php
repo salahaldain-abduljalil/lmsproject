@@ -48,7 +48,7 @@
                 let FormData = new FormData(this);
                 $.ajax({
                     method: 'POST',
-                    url: '{{ Route('profile.update') }}',
+                    url: '{{ Route("profile.update") }}',
                     data: FormData,
                     contentType: false,
                     processData: false,

@@ -795,6 +795,12 @@ button {
     left: 0;
 }
 
+.wsus__single_chat.chat_right {
+    text-align: right;
+    left: auto;
+    right: 0;
+}
+
 .wsus__single_chat.chat_right .time {
     text-align: right;
     left: auto;
@@ -1139,13 +1145,36 @@ button {
     Chatting Application End
 ================================*/
 
-.img-fluid .profile-image-preview{
+.wsus__single_chat .time,
+.wsus__single_chat .clock {
+    display: block;
+    font-size: 14px;
+    color: var(--paraColor);
+    font-weight: 400;
+    position: absolute;
+    bottom: -20px;
+    left: 0;
+    text-align: left;
+}
+
+.wsus__single_chat.chat_right .time,
+.wsus__single_chat.chat_right .clock {
+    text-align: right;
+    left: auto;
+    right: 0;
+}
+
+.wsus__single_chat.chat_right .clock i {
+    font-size: 11px;
+}
+
+.img-fluid .profile-image-preview {
     height: 135px !important;
     width: 135px !important;
     object-fit: cover;
 }
 
-.profile-file{
+.profile-file {
     height: 150px !important;
     width: 150px !important;
 
