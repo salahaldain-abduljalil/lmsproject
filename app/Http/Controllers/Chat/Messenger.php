@@ -10,68 +10,71 @@ use Illuminate\Support\Facades\Auth;
 
 class Messenger extends Controller
 {
-    public function index(){
+    public function index()
+    {
 
         return view('Messenger.Layout.app');
     }
-  //search user profile.
-    public function search(Request $request){
+    //search user profile.
+    public function search(Request $request)
+    {
 
         $getRecords = null;
         $input = $request['query'];
-        $records = User::where('id','!=',Auth::user()->id)
-        ->where('name','LIKE',"%{$input}%")->orWhere('user_name','LIKE',"%{$input}%")
-        ->paginate(10);
+        $records = User::where('id', '!=', Auth::user()->id)
+            ->where('name', 'LIKE', "%{$input}%")->orWhere('user_name', 'LIKE', "%{$input}%")
+            ->paginate(10);
 
-        if($records->total() < 1){
+        if ($records->total() < 1) {
 
             $getRecords .= "<p class='text-center'>Nothing to show.</p>"; //for the search part.
         }
 
 
-        foreach($records as $record){
+        foreach ($records as $record) {
 
-         $getRecords .= view('Messenger.Components.search-item',compact('record'))->render();
-
+            $getRecords .= view('Messenger.Components.search-item', compact('record'))->render();
         }
 
         return response()->json([
-            'records'=> $getRecords,
-            'last_page' => $records->lastPage(),//for the pagination.
+            'records' => $getRecords,
+            'last_page' => $records->lastPage(), //for the pagination.
         ]);
     }
 
-    public function fetchIdinfo(Request $request){
+    public function fetchIdinfo(Request $request)
+    {
 
-        $fetch = User::where('id',$request['id'])->first();
+        $fetch = User::where('id', $request['id'])->first();
         return response()->json([
-            'fetch'=> $fetch
+            'fetch' => $fetch
         ]);
     }
 
-    public function sendMessage(Request $request){
+    public function sendMessage(Request $request)
+    {
         $request->validate([
-            'message'=>['required'],
-            'id'  => ['required','integer'],
-            'temporaryMsgId' =>['required']
+            'message' => ['required'],
+            'id'  => ['required', 'integer'],
+            'temporaryMsgId' => ['required']
 
         ]);
 
         $message = new Message();
-        $message->form_id = Auth::user()->id;
+        $message->from_id = Auth::user()->id;
         $message->to_id = $request->id;
         $message->body = $request->message;
         $message->save();
 
         return response()->json([
-            'message'=> $this->messageCard($message),
-            'tempID' => 'temporaryMsgId'
+            'message' => $this->messageCard($message), //to recipient the message to the it place.
+            'tempId' => $request->temporaryMsgId //id of the sender.
         ]);
-
     }
 
-    public function messageCard($message){
+    public function messageCard($message)
+    {
 
-        return view('Messenger.Components.message-card',compact('message'))->render();
+        return view('Messenger.Components.message-card', compact('message'))->render();
     }
 }

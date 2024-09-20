@@ -53,7 +53,7 @@ Route::middleware('auth')->group(function () {
     // User Wishlist All Route
     Route::controller(WishListController::class)->group(function () {
         Route::get('/user/wishlist', 'AllWishlist')->name('user.wishlist');
-        Route::get('/get-wishlist-course/', 'GetWishlistCourse');
+        Route::get('get-wishlist-course/', 'GetWishlistCourse');
         Route::get('/wishlist-remove/{id}', 'RemoveWishlist');
     });
 
@@ -338,24 +338,22 @@ Route::controller(CartController::class)->group(function () {
     Route::get('/live/chat', [UserController::class, 'LiveChat'])->name('live.chat');
     Route::get('/user-all', [ChatController::class, 'GetAllUsers']);
     Route::get('/user-message/{id}', [ChatController::class, 'UserMsgById']);
-   Route::get('/instructor/live/chat', [ChatController::class, 'LiveChat'])->name('instructor.live.chat');
+    Route::get('/instructor/live/chat', [ChatController::class, 'LiveChat'])->name('instructor.live.chat');
 });
 ///// End Route Accessable for All
 
 
 ////All Route For the Chat Application.
 
-Route::middleware(['auth'])->group(function(){
+Route::middleware(['auth'])->group(function () {
 
-    Route::get('/messenger-chat',[Messenger::class,'index'])->name('home');
-    Route::post('/profile',[UserProfileController::class,'update'])->name("profile.update");
-   //search route
+    Route::get('messenger-chat', [Messenger::class, 'index'])->name('home');
+    Route::post('profile', [UserProfileController::class, 'update'])->name("profile.update");
+    //search route
 
-   Route::get('/messenger-chat/search',[Messenger::class, 'search'])->name('messenger.search');
-   //fetch user by id.
-   Route::get('/messenger-id/info',[Messenger::class, 'fetchIdinfo'])->name('messenger.id-info');
-//send message.
-Route::post('/messengermsg/send-message',[Messenger::class,'sendMessage'])->name('messenger.sendmessage');
+    Route::get('messenger-chat/search', [Messenger::class, 'search'])->name('messenger.search');
+    //fetch user by id.
+    Route::get('messenger-id/info', [Messenger::class, 'fetchIdinfo'])->name('messenger.id-info');
+    //send message.
+    Route::post('messengermsg/send-message', [Messenger::class, 'sendMessage'])->name('messenger.sendmessage');
 });
-
-

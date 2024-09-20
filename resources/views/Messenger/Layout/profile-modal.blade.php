@@ -41,20 +41,20 @@
 @push('scripts')
     <script>
         $(document).ready(function() {
-            $('.profile-form').on('submit', function(e) {
+            $(".profile-form").on("submit", function(e) {
 
                 e.preventDefault();
                 let saveBtn = $('.profile-save');
                 let FormData = new FormData(this);
                 $.ajax({
                     method: 'POST',
-                    url: '{{ Route("profile.update") }}',
+                    url: '/profile',
                     data: FormData,
                     contentType: false,
                     processData: false,
                     beforeSend: function() {
                         saveBtn.text('saving...');
-                        saveBtn.prop("disabled",true);
+                        saveBtn.prop("disabled", true);
                     },
                     success: function(data) {
 
@@ -68,10 +68,10 @@
                             notyf.error(value[0]);
                         })
                         saveBtn.text('Save Changes');
-                        saveBtn.prop("disabled",false);
+                        saveBtn.prop("disabled", false);
 
                     }
-                })
+                });
 
             })
 

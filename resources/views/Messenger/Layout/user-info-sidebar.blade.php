@@ -6,7 +6,7 @@
 
     <div class="wsus__chat_info_details user-info-view">
         <div class="user_photo">
-            <img src="{{ asset('chatasset/css') }}images/author_img_2.jpg" alt="User" class="img-fluid">
+            <img src="{{ asset('chatasset') }}/images/author_img_2.jpg" alt="User" class="img-fluid">
         </div>
         <h3 class="user_name">Hasan Masud</h3>
         <span class="user-unique-name"></span>
@@ -17,7 +17,7 @@
         <ul class="wsus__chat_info_gallery">
             <li>
                 <a class="venobox" data-gall="gallery01" href="images/chat_img.png">
-                    <img src="{{ asset('chatasset/css') }}images/chat_img.png" alt="gallery1" class="img-fluid w-100">
+                    <img src="{{ asset('chatasset') }}/images/chat_img.png" alt="gallery1" class="img-fluid w-100">
                 </a>
             </li>
         </ul>

@@ -13,7 +13,7 @@
                     <span class="back_to_list">
                         <i class="fas fa-arrow-left"></i>
                     </span>
-                    <img src="{{ asset('chatasset/css') }}images/author_img_2.jpg" alt="User" class="img-fluid">
+                    <img src="{{ asset('chatasset') }}/images/author_img_2.jpg" alt="User" class="img-fluid">
                     <h4>Jubaydul islam</h4>
                 </div>
                 <div class="header_right">
@@ -68,8 +68,7 @@
                 <div class="wsus__single_chat_area">
                     <div class="wsus__single_chat chat_right">
                         <a class="venobox" data-gall="gallery01" href="images/chat_img.png">
-                            <img src="{{ asset('chatasset/css') }}images/chat_img.png" alt="gallery1"
-                                class="img-fluid w-100">
+                            <img src="{{ asset('chatasset') }}/images/chat_img.png" alt="gallery1" class="img-fluid w-100">
                         </a>
                         <span class="time"> 5h ago</span>
                         <a class="action" href="#"><i class="fas fa-trash"></i></a>
@@ -80,8 +79,7 @@
                     <div class="wsus__single_chat">
                         <p class="messages">You can give a photo ?</p>
                         <a class="venobox" data-gall="gallery01" href="images/chat_img.png">
-                            <img src="{{ asset('chatasset/css') }}images/chat_img.png" alt="gallery1"
-                                class="img-fluid w-100">
+                            <img src="{{ asset('chatasset') }}/images/chat_img.png" alt="gallery1" class="img-fluid w-100">
                         </a>
                         <span class="time"> 5h ago</span>
                         <a class="action" href="#"><i class="fas fa-trash"></i></a>
@@ -96,8 +94,7 @@
                             </div>
                         </div>
                         <a class="venobox" data-gall="gallery01" href="images/chat_img.png">
-                            <img src="{{ asset('chatasset/css') }}images/chat_img.png" alt="gallery1"
-                                class="img-fluid w-100">
+                            <img src="{{ asset('chatasset') }}/images/chat_img.png" alt="gallery1" class="img-fluid w-100">
                         </a>
                         <span class="time"> 5h ago</span>
                         <a class="action" href="#"><i class="fas fa-trash"></i></a>
@@ -109,15 +106,20 @@
             <div class="wsus__chat_area_footer">
                 <div class="footer_message">
                     <!-- <div class="img">
-                                        <img src="{{ asset('chatasset/css') }}images/chat_img.png" alt="User" class="img-fluid">
-                                        <span><i class="far fa-times"></i></span>
-                                    </div> -->
-                    <form action="#" class="message-form">
+                                                        <img src="{{ asset('chatasset') }}/images/chat_img.png" alt="User" class="img-fluid">
+                                                        <span><i class="far fa-times"></i></span>
+                                                    </div> -->
+                    <form action="#" class="message-form" method="post">
+                        @csrf
                         <div class="file">
                             <label for="file"><i class="far fa-plus"></i></label>
                             <input id="file" type="file" hidden>
                         </div>
-                        <textarea id="example1" rows="1" placeholder="Type a message.." name="message" class="message-input"></textarea>
+                        <textarea rows="1" placeholder="Type a message.." name="message" class="message-input">
+                        </textarea>
+                        @error('message')
+                            {{ $message }}
+                        @enderror
                         <button type="submit"><i class="fas fa-paper-plane"></i></button>
                     </form>
                 </div>
