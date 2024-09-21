@@ -140,8 +140,9 @@ function IDinfo(id) {
 function sendMessage() {
     temporaryMsgId += 1;
     let tempId = `temp_${temporaryMsgId}`;
+    let hasAttachment = !!$(".message-input").val();
     const inputvalue = messageInput.val();
-    if (inputvalue.length > 0) {
+    if (inputvalue.length > 0 || hasAttachment) {
         const Formdata = new FormData($(".message-form")[0]);
         Formdata.append("id", getMessengerId()); //for the sender.
         Formdata.append("temporaryMsgId", tempId);
@@ -154,18 +155,27 @@ function sendMessage() {
             contentType: false,
             beforeSend: function () {
                 //add temp message on dom.
-                messagechatBoxcontainer.append(
-                    sendTempmessagecard(inputvalue, tempId)
-                );
-                messageForm.trigger("reset"); //for the reset operation to the form chat.
-                $(".emojionearea-editor").text("");
+                if (hasAttachment) {
+                    messagechatBoxcontainer.append(
+                        sendTempmessagecard(inputvalue, tempId, true)
+                    );
+                } else {
+                    messagechatBoxcontainer.append(
+                        sendTempmessagecard(inputvalue, tempId)
+                    );
+                }
+
+                //for the reset operation to the form chat.
+                MessageFormReset();
             },
             data: Formdata,
 
             success: function (data) {
-                const TempMsgCardElemet = messagechatBoxcontainer.find(`.message-card[data-id=${data.tempId}]`);
+                const TempMsgCardElemet = messagechatBoxcontainer.find(
+                    `.message-card[data-id=${data.tempId}]`
+                );
                 TempMsgCardElemet.before(data.message);
-                TempMsgCardElemet.remove();    //this to change the Tempid value.
+                TempMsgCardElemet.remove(); //this to change the Tempid value.
             },
             error: function (xhr, status, error) {
                 console.log(xhr);
@@ -173,8 +183,33 @@ function sendMessage() {
         });
     }
 }
-function sendTempmessagecard(message, tempId) {
-    return `
+function sendTempmessagecard(message, tempId, attachment = false) {
+    if (attachment) {
+        return `
+           <div class="wsus__single_chat_area message-card" data-id="${tempId}">
+                    <div class="wsus__single_chat chat_right">
+                        <div class="pre_loader">
+                            <div class="spinner-border text-light" role="status">
+                                <span class="visually-hidden">Loading...</span>
+                            </div>
+                        </div>
+                        <a class="venobox" data-gall="gallery01" href="images/chat_img.png">
+                            <img src="{{ asset('chatasset') }}/images/chat_img.png" alt="gallery1" class="img-fluid w-100">
+                        </a>
+                        ${
+                            message.length > 0
+                                ? `<p class="messages">${message}</p>`
+                                : ''
+                        }
+
+                   <span class="clock"><i class="fas fa-clock"></i>now</span>
+                        <a class="action" href="#"><i class="fas fa-trash"></i></a>
+                    </div>
+                </div>
+
+        `;
+    } else {
+        return `
 
                 <div class="wsus__single_chat_area message-card" data-id="${tempId}">
                     <div class="wsus__single_chat chat_right">
@@ -182,9 +217,14 @@ function sendTempmessagecard(message, tempId) {
                    <span class="clock"><i class="fas fa-clock"></i> 5h ago</span>
                   <a class="action" href="#"><i class="fas fa-trash"></i></a>
                     </div>
-                </div>`
+                </div>`;
+    }
 }
-
+function MessageFormReset() {
+    messageForm.trigger("reset");
+    $(".emojionearea-editor").text("");
+    $(".attachment-block").addClass("d-none");
+}
 /**
  * --------------------
  * On Dom Load.
@@ -224,5 +264,15 @@ $(document).ready(function () {
     $(".message-form").on("submit", function (e) {
         e.preventDefault();
         sendMessage();
+    });
+
+    //send attachment
+
+    $(".attachment-input").change(function () {
+        imagePreview(this, ".attachment-preview");
+        $(".attachment-block").removeClass("d-none");
+    });
+    $(".canceled-attachment").on("click", function () {
+        MessageFormReset();
     });
 });

@@ -1,8 +1,0 @@
-
-<?php
-
-
-trait MessengerTrait {
-
-}
-
