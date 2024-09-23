@@ -17,8 +17,11 @@ function enableChatboxloader() {
     $(".wsus__message_paceholder").removeClass("d-none");
 }
 function disableChatboxloader() {
+    $(".wsus__chat_app").removeClass(".show_info");
     $(".wsus__message_paceholder").addClass("d-none");
+    $(".wsus__message_paceholder_black").addClass("d-none");
 }
+
 function imagePreview(input, selector) {
     if (input.files && input.files[0]) {
         var render = new FileReader();
@@ -111,6 +114,8 @@ function IDinfo(id) {
         },
         data: { id: id },
         success: function (data) {
+            //to fetch the id of the Other user.
+            fetchMessage(data.fetch.id, true);
             $(".messenger-header").find("img").attr("src", data.fetch.avatar);
             $(".messenger-header").find("h4").text(data.fetch.name);
             $(".user-info-view .user_photo")
@@ -167,12 +172,13 @@ function sendMessage() {
 
                 //for the reset operation to the form chat.
                 MessageFormReset();
+                scrollToBottom(messagechatBoxcontainer);
             },
             data: Formdata,
 
             success: function (data) {
                 const TempMsgCardElemet = messagechatBoxcontainer.find(
-                    `.message-card[data-id=${data.tempId}]`
+                    `.message-card[data-id="${data.tempId}"]`
                 );
                 TempMsgCardElemet.before(data.message);
                 TempMsgCardElemet.remove(); //this to change the Tempid value.
@@ -199,7 +205,7 @@ function sendTempmessagecard(message, tempId, attachment = false) {
                         ${
                             message.length > 0
                                 ? `<p class="messages">${message}</p>`
-                                : ''
+                                : ""
                         }
 
                    <span class="clock"><i class="fas fa-clock"></i>now</span>
@@ -224,6 +230,79 @@ function MessageFormReset() {
     messageForm.trigger("reset");
     $(".emojionearea-editor").text("");
     $(".attachment-block").addClass("d-none");
+}
+/**
+ * --------------------
+ * Fetch Message From Database.
+ * --------------------
+ */
+let messagepage = 1;
+let nomoremessages = false;
+let messageloading = false; //for the request loading to waiting to the previous request.
+function fetchMessage(id, newFetch = false) {
+    if (newFetch) {
+        messagepage = 1;
+        nomoremessages = false;
+    }
+    if (!nomoremessages && !messageloading) {
+        $.ajax({
+            method: "GET",
+            url: "/messenger/fetch-message",
+            data: {
+                _token: csrf_token,
+                id: id,
+                page: messagepage,
+            },
+            beforeSend: function () {
+                messageloading = true;
+                let loader = `
+                <div class="text-center messages-loader">
+             <div class="spinner-border text-primary" role="status">
+                 <span class="visually-hidden">Loading...</span>
+             </div>
+         </div>`;
+         messagechatBoxcontainer.prepend(loader);
+            },
+            success: function (data) {
+                messageloading = false;
+                //remove The Loader.
+                messagechatBoxcontainer.find(".messages-loader").remove();
+                if (messagepage == 1) {
+                    messagechatBoxcontainer.html(data.messages);
+                    scrollToBottom(messagechatBoxcontainer);
+                } else {
+                    const lastMsg = $(messagechatBoxcontainer)
+                        .find(".message-card")
+                        .first();
+                    const curoffset =
+                        lastMsg.offset().top -
+                        messagechatBoxcontainer.scrollTop();
+                    messagechatBoxcontainer.prepend(data.messages);
+                    messagechatBoxcontainer.scrollTop(
+                        lastMsg.offset().top - curoffset
+                    );
+                }
+
+                //pagination lock and page increment.
+                nomoremessages = messagePage >= data?.last_page;
+                if (!nomoremessages) messagePage += 1;
+            },
+            error: function (xhr, status, error) {},
+        });
+    }
+}
+
+/**
+ * --------------------
+ * Slide to Bottom on Action.
+ * --------------------
+ */
+function scrollToBottom(container) {
+    $(container)
+        .stop()
+        .animate({
+            scrollTop: $(container)[0].scrollHeight,
+        });
 }
 /**
  * --------------------
@@ -275,4 +354,12 @@ $(document).ready(function () {
     $(".canceled-attachment").on("click", function () {
         MessageFormReset();
     });
+    //message pagination.
+    actiononScroll(
+        ".wsus__chat_area_body",
+        function () {
+            fetchMessage(getMessengerId());
+        },
+        true
+    );
 });
