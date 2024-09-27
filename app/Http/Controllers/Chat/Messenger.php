@@ -8,6 +8,7 @@ use App\Models\User;
 use App\Traits\FileUploadTrait;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class Messenger extends Controller
 {
@@ -108,5 +109,76 @@ class Messenger extends Controller
         }
         $response['messages'] = $allMessages;
         return response()->json($response);
+    }
+
+    public function fetchContact(Request $request){
+      //the steps
+      //1 we are joined the messages and users table depending to the relationship.
+      //2 selecting the messages which depending to the current users.
+      //3 we must to ignore ourself.
+      //4
+        $users = Message::join("users",function($join){
+
+            $join->on('messages.from_id','=','users.id')->orOn('messages.to_id','=','users.id');
+        })->where(function($q){
+            $q->where('messages.from_id',Auth::user()->id)
+            ->orWhere('messages.to_id',Auth::user()->id);  //this is query it for the real chatting.
+        })->where('users.id','!=',Auth::user()->id)->select('users.*',DB::raw('MAX(messages.created_at) max_created_at'))
+        ->orderBy('max_created_at','desc')->groupBy('users.id')
+        ->paginate(10);
+
+        if(count($users) > 0){
+            $contacts = '';
+            foreach($users as $user){
+               $contacts .= $this->getContactItem($user);
+            }
+
+        }else{
+            $contacts = "<p>Yout contact List is Empty!</p>";
+
+        }
+
+        return response()->json([
+            'contacts' => $contacts,
+            'last_page' => $users->lastpage()
+        ]);
+
+
+    }
+    public function getContactItem($user){
+
+        $lastMessage = Message::where('from_id', Auth::user()->id)->where('to_id', $user->id)
+        ->orWhere('from_id', $user->id)->where('to_id', Auth::user()->id)->latest()->first();
+
+        $unseenCounter = Message::where('from_id',$user->id)->where('to_id',Auth::user()->id)->where('seen',0)->count();
+
+        return view('Messenger.Components.contact-list-item',compact('lastMessage','unseenCounter','user'))->render();
+    }
+
+    //update contact item.
+
+    public function updateContactItem(Request $request){
+
+        $user = User::where('id',$request->user_id)->first();
+
+        if(!$user){
+
+            return response()->json([
+                'message' => 'message not Found'
+            ],401);
+        }
+        $contactItem = $this->getContactItem($user);
+        return response()->json([
+            'contact_item' => $contactItem
+        ],200);
+
+    }
+    public function makeseen(Request $request){
+
+        Message::where('from_id',$request->id)
+        ->where('to_id',Auth::user()->id)->where('seen',0)
+        ->update(['seen' => 1]);
+
+        return true;
     }
 }

@@ -357,4 +357,7 @@ Route::middleware(['auth'])->group(function () {
     //send message.
     Route::post('messengermsg/send-message', [Messenger::class, 'sendMessage'])->name('messenger.sendmessage');
     Route::get('messenger/fetch-message', [Messenger::class, 'fetchMessage'])->name('messenger.fetchmessage');
+    Route::get('messenger/fetch-contact', [Messenger::class, 'fetchContact'])->name('messenger.fetchcontact');
+    Route::get('messenger/update-contact-item', [Messenger::class, 'updateContactItem'])->name('update.contact-item');
+    Route::post('messenger/make-seen', [Messenger::class, 'makeseen'])->name('messenger.makeseen');
 });
