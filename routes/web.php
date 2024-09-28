@@ -360,4 +360,6 @@ Route::middleware(['auth'])->group(function () {
     Route::get('messenger/fetch-contact', [Messenger::class, 'fetchContact'])->name('messenger.fetchcontact');
     Route::get('messenger/update-contact-item', [Messenger::class, 'updateContactItem'])->name('update.contact-item');
     Route::post('messenger/make-seen', [Messenger::class, 'makeseen'])->name('messenger.makeseen');
+    //favorite route.
+    Route::post('messenger/favorite', [Messenger::class, 'favorite'])->name('messenger.favorite');
 });

@@ -118,6 +118,10 @@ function IDinfo(id) {
         success: function (data) {
             //to fetch the id of the Other user.
             fetchMessage(data.fetch.id, true);
+
+            data.favorite > 0
+                ? $(".favourite").addClass("active")
+                : $(".favourite").removeClass("active");
             $(".messenger-header").find("img").attr("src", data.fetch.avatar);
             $(".messenger-header").find("h4").text(data.fetch.name);
             $(".user-info-view .user_photo")
@@ -386,6 +390,51 @@ function Makeseen(status) {
         },
     });
 }
+/**
+ * --------------------
+ * Favorite.
+ * --------------------
+ */
+function star(user_id) {
+    $(".favourite").toggleClass("active");
+    $.ajax({
+        method: "POST",
+        url: "/messenger/favorite",
+        data: {
+            _token: csrf_token,
+            id: user_id,
+        },
+        success: function (data) {
+            if (data.status == "added") {
+                notyf.success("has been added to the favorite list.");
+            } else {
+                notyf.success("has been removed from the favorite list.");
+            }
+        },
+        error: function (xhr, status, error) {
+            console.log(status);
+        },
+    });
+}
+// /**
+//  * --------------------
+//  * Get Favoritelist.
+//  * --------------------
+//  */
+// function Fetchfavoritelist() {
+//     $.ajax({
+//         method: "GET",
+//         url: "/messenger/fetch-favorite",
+//         data: {
+//         },
+//         success: function (data) {
+//         $(".favourite_user_slider").html(data.favoritelist);
+//         },
+//         error: function (xhr, status, error) {
+//             console.log(status);
+//         },
+//     });
+// }
 
 function updateSelectedContent(user_id) {
     $(".messenger-list-item").removeClass("active");
@@ -408,8 +457,17 @@ function scrollToBottom(container) {
  * On Dom Load.
  * --------------------
  */
-getcontacts();
+
 $(document).ready(function () {
+    getcontacts();
+    if(window.innerWidth < 768){
+        $("body").on("click", ".messenger-list-item", function () {
+         $(".wsus__user_list").addClass('d-none');
+        });
+        $("body").on("click", ".back_to_list", function () {
+         $(".wsus__user_list").removeClass('d-none');
+        });
+    }
     $("#select_file").change(function () {
         imagePreview(this, ".profile-image-preview");
     });
@@ -470,4 +528,10 @@ $(document).ready(function () {
         },
         true
     );
+    //add or remove the favorite.
+
+    $(".favourite").on("click", function (e) {
+        e.preventDefault(); //it's for the dom start.
+        star(getMessengerId());
+    });
 });

@@ -15,17 +15,23 @@
 
     <div class="wsus__favourite_user">
         <div class="top">favourites</div>
-        <div class="row favourite_user_slider">
+        @foreach ($favorites as $li)
+        <div class="row favourite_user_slider messenger-list-item" data-id="{{ $li->users->id }}">
             <div class="col-xl-3">
                 <a href="#" class="wsus__favourite_item">
                     <div class="img">
-                        <img src="{{ asset('chatasset/css') }}images/author_img_1.jpg" alt="User" class="img-fluid">
+                        <img src="{{ asset($li->users?->avatar) }}" alt="User" class="img-fluid">
                         <span class="inactive"></span>
                     </div>
-                    <p>mr hasin</p>
+                    <p>{{ $li->users?->name }}</p>
                 </a>
             </div>
+
+
         </div>
+
+        @endforeach
+
     </div>
 
     <div class="wsus__save_message messenger-list-item" data-id="{{ auth()->user()->id }}">
