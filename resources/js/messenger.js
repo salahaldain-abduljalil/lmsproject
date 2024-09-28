@@ -120,11 +120,11 @@ function IDinfo(id) {
             fetchMessage(data.fetch.id, true);
             //to load the gallery
             $(".wsus__chat_info_gallery").html(""); //to display image users toggle.
-            if(data?.shared_photos){
-                $(".nothing_share").removeClass('d-none');
+            if (data?.shared_photos) {
+                $(".nothing_share").removeClass("d-none");
                 $(".wsus__chat_info_gallery").html(data.shared_photos);
-            }else{
-                $(".nothing_share").removeClass('d-none');
+            } else {
+                $(".nothing_share").removeClass("d-none");
             }
             data.favorite > 0
                 ? $(".favourite").addClass("active")
@@ -224,7 +224,6 @@ function sendTempmessagecard(message, tempId, attachment = false) {
                         }
 
                    <span class="clock"><i class="fas fa-clock"></i>now</span>
-                        <a class="action" href="#"><i class="fas fa-trash"></i></a>
                     </div>
                 </div>
 
@@ -236,7 +235,6 @@ function sendTempmessagecard(message, tempId, attachment = false) {
                     <div class="wsus__single_chat chat_right">
                         <p class="messages">${message}</p>
                    <span class="clock"><i class="fas fa-clock"></i> 5h ago</span>
-                  <a class="action" href="#"><i class="fas fa-trash"></i></a>
                     </div>
                 </div>`;
     }
@@ -423,25 +421,38 @@ function star(user_id) {
         },
     });
 }
-// /**
-//  * --------------------
-//  * Get Favoritelist.
-//  * --------------------
-//  */
-// function Fetchfavoritelist() {
-//     $.ajax({
-//         method: "GET",
-//         url: "/messenger/fetch-favorite",
-//         data: {
-//         },
-//         success: function (data) {
-//         $(".favourite_user_slider").html(data.favoritelist);
-//         },
-//         error: function (xhr, status, error) {
-//             console.log(status);
-//         },
-//     });
-// }
+/**
+ * --------------------
+ * Delete a Message.
+ * --------------------
+ */
+
+function DeleteMessage(message_id) {
+    Swal.fire({
+        title: "Are you sure?",
+        text: "You won't be able to revert this!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, delete it!",
+    }).then((result) => {
+        if (result.isConfirmed) {
+            $.ajax({
+                method: "DELETE",
+                url: "/messenger/delete-message",
+                data: { _token: csrf_token, message_id: message_id },
+                beforeSend: function () {
+                    $(`.message-card[data-id="${message_id}"]`).remove();
+                },
+                success: function (data) {
+                    updateContactItem(getMessengerId());
+                },
+                error: function (xhr, status, error) {},
+            });
+        }
+    });
+}
 
 function updateSelectedContent(user_id) {
     $(".messenger-list-item").removeClass("active");
@@ -461,18 +472,27 @@ function scrollToBottom(container) {
 }
 /**
  * --------------------
+ * Initialize venobox.js.
+ * --------------------
+ */
+
+// function initVenobox(){
+//     $('.venobox').venobox();
+// }
+/**
+ * --------------------
  * On Dom Load.
  * --------------------
  */
 
 $(document).ready(function () {
     getcontacts();
-    if(window.innerWidth < 768){
+    if (window.innerWidth < 768) {
         $("body").on("click", ".messenger-list-item", function () {
-         $(".wsus__user_list").addClass('d-none');
+            $(".wsus__user_list").addClass("d-none");
         });
         $("body").on("click", ".back_to_list", function () {
-         $(".wsus__user_list").removeClass('d-none');
+            $(".wsus__user_list").removeClass("d-none");
         });
     }
     $("#select_file").change(function () {
@@ -540,5 +560,13 @@ $(document).ready(function () {
     $(".favourite").on("click", function (e) {
         e.preventDefault(); //it's for the dom start.
         star(getMessengerId());
+    });
+
+    //delete mesage.
+
+    $("body").on("click", ".dlt-message", function (e) {
+        e.preventDefault();
+        let id = $(this).data(id);
+        DeleteMessage(id);
     });
 });

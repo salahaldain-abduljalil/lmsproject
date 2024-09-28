@@ -57,6 +57,7 @@
     <script src="{{ asset('chatasset') }}/js/main.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.js"></script>
     <script src="https://unpkg.com/nprogress@0.2.0/nprogress.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
     <script>
         var notyf = new Notyf({
             duration: 5000,

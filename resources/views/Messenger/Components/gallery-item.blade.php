@@ -3,7 +3,7 @@
 @endphp
 
 <li>
-    <a class="venobox" data-gall="gallery01" href="{{ $image->attachment }}">
-        <img src="{{ $image->attachment }}" alt="" class="img-fluid w-100" loading="lazy">
+    <a class="venobox" data-gall="gallery01" href="{{ $image }}">
+        <img src="{{ asset($image) }}" alt="" class="img-fluid w-100" loading="lazy">
     </a>
 </li>

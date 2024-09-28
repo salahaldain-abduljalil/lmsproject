@@ -100,7 +100,7 @@ class Messenger extends Controller
     {
 
         $messages = Message::where('from_id', Auth::user()->id)->where('to_id', $request->id)
-            ->orWhere('to_id', Auth::user()->id)->where('from_id', $request->id)->latest()->paginate(20);
+            ->orWhere('from_id', $request->id)->where('to_id',Auth::user()->id)->latest()->paginate(20);
 
         $response = [
             'last_page' => $messages->lastPage(),
@@ -109,7 +109,7 @@ class Messenger extends Controller
         ];
 
 
-        if (count($messages) > 0) {
+        if (count($messages) < 1) {
 
             $response['messages'] = "<div class='d-flex justify-content-center align-items-center h-100'><p>say 'Hi' and start Messaging</p></div>";
             return response()->json($response);
@@ -208,6 +208,18 @@ class Messenger extends Controller
             $query->delete();
             return response(['status'=>'removed']);
         }
+    }
+
+    public function DeleteMsg(Request $request){
+    $message = Message::findOrFail($request->message_id);
+    if($message->from_id == Auth::user()->id){
+        $message->delete();
+        return response()->json([
+            'id' => $request->message_id
+        ],200);
+
+    }
+    return;  //it's mean return nothing.
     }
 
 }
