@@ -51,9 +51,18 @@ class Messenger extends Controller
 
         $fetch = User::where('id', $request['id'])->first();
         $favorite = Favorite::where(['user_id'=>Auth::user()->id, 'favorite_id' => $fetch->id])->exists();
+        $sharedphotos = Message::where('from_id', Auth::user()->id)->where('to_id', $request->id)->WhereNotNull('attachment')
+            ->orWhere('to_id', Auth::user()->id)->where('from_id', $request->id)->WhereNotNull('attachment')->latest()->get();
+
+            $content = '';
+            foreach($sharedphotos as $photo){
+
+                $content .= view('Messenger.Components.gallery-item',compact('photo'))->render();
+            }
         return response()->json([
             'fetch' => $fetch,
-            'favorite' => $favorite
+            'favorite' => $favorite,
+            'shared_photos' => $content
         ]);
     }
 

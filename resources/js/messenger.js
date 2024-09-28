@@ -118,7 +118,14 @@ function IDinfo(id) {
         success: function (data) {
             //to fetch the id of the Other user.
             fetchMessage(data.fetch.id, true);
-
+            //to load the gallery
+            $(".wsus__chat_info_gallery").html(""); //to display image users toggle.
+            if(data?.shared_photos){
+                $(".nothing_share").removeClass('d-none');
+                $(".wsus__chat_info_gallery").html(data.shared_photos);
+            }else{
+                $(".nothing_share").removeClass('d-none');
+            }
             data.favorite > 0
                 ? $(".favourite").addClass("active")
                 : $(".favourite").removeClass("active");
