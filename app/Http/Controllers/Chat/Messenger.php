@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Chat;
 
 use App\Http\Controllers\Controller;
+use App\Events\Message as MessageEvent;
 use App\Models\Favorite;
 use App\Models\Message;
 use App\Models\User;
@@ -82,6 +83,9 @@ class Messenger extends Controller
         $message->body = $request->message;
         if ($attachmentPath) $message->attachment = json_encode($attachmentPath);
         $message->save();
+
+        //broadcast Event.
+        MessageEvent::dispatch($message);
 
         return response()->json([
             'message' => $message->attachment ? $this->messageCard($message, true) : $this->messageCard($message), //to recipient the message to the it place.

@@ -8,6 +8,7 @@ const messageForm = $(".message-form"),
     messagechatBoxcontainer = $(".wsus__chat_area_body"),
     csrf_token = $("meta[name=csrf_token]").attr("content"),
     auth_id = $("meta[name=auth_id]").attr("content"),
+    url = $("meta[name=url]").attr("content"),
     messengerContactBox = $(".messenger-contacts");
 const getMessengerId = () => $("meta[name=id]").attr("content");
 const setMessengerId = (id) => $("meta[name=id]").attr("content", id); //to get the user id inside content.
@@ -67,7 +68,7 @@ function searchUsers(query) {
                 } else {
                     $(".user_search_list_result").append(data.records);
                 }
-                nomoreDatasearch = searchPage >= data?.last_pages;
+                nomoreDatasearch = searchPage >= data?.last_page;
 
                 searchPage += 1;
             },
@@ -113,6 +114,7 @@ function IDinfo(id) {
         beforeSend: function () {
             NProgress.start(); //to start work with nprogress npm.
             enableChatboxloader();
+            MessageFormReset();
         },
         data: { id: id },
         success: function (data) {
@@ -182,7 +184,6 @@ function sendMessage() {
                         sendTempmessagecard(inputvalue, tempId)
                     );
                 }
-
                 //for the reset operation to the form chat.
                 MessageFormReset();
                 scrollToBottom(messagechatBoxcontainer);
@@ -239,10 +240,44 @@ function sendTempmessagecard(message, tempId, attachment = false) {
                 </div>`;
     }
 }
+
+function receiveMessagecard(e) {
+    if (e.attachment) {
+        return `
+           <div class="wsus__single_chat_area message-card" data-id="${e.id}">
+                    <div class="wsus__single_chat">
+                     <a class="venobox" data-gall="gallery${e.id}" href="${
+            url + e.attachment
+        }">
+                <img src="${url + e.attachment}" alt="" class="img-fluid w-100">
+            </a>
+                        <a class="venobox" data-gall="gallery01" href="images/chat_img.png">
+                            <img src="{{ asset('chatasset') }}/images/chat_img.png" alt="gallery1" class="img-fluid w-100">
+                        </a>
+                        ${
+                            e.body.length > 0
+                                ? `<p class="messages">${e.body}</p>`
+                                : ""
+                        }
+
+                    </div>
+                </div>
+
+        `;
+    } else {
+        return `
+
+                <div class="wsus__single_chat_area message-card" data-id="${e.id}">
+                    <div class="wsus__single_chat">
+                        <p class="messages">${e.body}</p>
+                    </div>
+                </div>`;
+    }
+}
 function MessageFormReset() {
-    messageForm.trigger("reset");
     $(".emojionearea-editor").text("");
     $(".attachment-block").addClass("d-none");
+    messageForm.trigger("reset");
 }
 /**
  * --------------------
@@ -299,8 +334,8 @@ function fetchMessage(id, newFetch = false) {
                 }
 
                 //pagination lock and page increment.
-                nomoremessages = messagePage >= data?.last_page;
-                if (!nomoremessages) messagePage += 1;
+                nomoremessages = messagepage >= data?.last_page;
+                if (!nomoremessages) messagepage += 1;
             },
             error: function (xhr, status, error) {},
         });
@@ -351,7 +386,7 @@ function getcontacts() {
 }
 /**
  * --------------------
- * Update Contact Item.
+ * Update Contact Item it's for push Element to the top.
  * --------------------
  */
 
@@ -481,6 +516,45 @@ function scrollToBottom(container) {
 // }
 /**
  * --------------------
+ * message notification sound.
+ * --------------------
+ */
+
+function playnotifysound(){
+    const sound = new Audio(`/chatasset/8_message-sound.mp3`);
+    sound.play();
+}
+//listen to the message channel.
+window.Echo.private('message.' + auth_id).listen("Message", (e) => {
+    console.log(e);
+    if(getMessengerId() != e.from_id){
+        updateContactItem(e.from_id);
+        playnotifysound();
+    }
+    let message = receiveMessagecard(e);
+    if(getMessengerId() == e.from_id){
+    messagechatBoxcontainer.append(message);
+    scrollToBottom(messagechatBoxcontainer);
+    }
+})
+
+//listen to the online channel.
+
+Window.Echo.join('online')
+.here((users) => {
+    console.log(users);  //here how many people already at the channel.
+}).joining((user) => {
+
+    console.log(user); //here the people will get notification you're joined to the channel.
+
+
+}).leaving((user) => {
+    console.log(user); //here the people will get notification you're leaved from the channel.
+
+});
+
+/**
+ * --------------------
  * On Dom Load.
  * --------------------
  */
@@ -523,6 +597,7 @@ $(document).ready(function () {
         updateSelectedContent(dataId);
         setMessengerId(dataId);
         IDinfo(dataId);
+        playnotifysound();
     });
     //Send message.
     $(".message-form").on("submit", function (e) {
