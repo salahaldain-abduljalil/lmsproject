@@ -2,6 +2,7 @@
  * GlobL variables.
  */
 var temporaryMsgId = 0;
+var activeuserId = [];
 
 const messageForm = $(".message-form"),
     messageInput = $(".message-input"),
@@ -376,6 +377,7 @@ function getcontacts() {
                 }
                 noMoreContact = contactpage >= data?.last_page;
                 if (!noMoreContact) contactpage += 1;
+                updateUserActiveList();
             },
             error: function (xhr, status, error) {
                 contactLoading = false;
@@ -401,6 +403,9 @@ function updateContactItem(user_id) {
                     .find(`.messenger-list-item[data-id="${user_id}"]`)
                     .remove();
                 messengerContactBox.prepend(data.contact_item);
+                if (activeuserId.includes(+user_id)) {
+                    userActive(user_id);
+                }
                 if (user_id == getMessengerId()) updateSelectedContent(user_id);
             },
 
@@ -520,38 +525,89 @@ function scrollToBottom(container) {
  * --------------------
  */
 
-function playnotifysound(){
+function playnotifysound() {
     const sound = new Audio(`/chatasset/8_message-sound.mp3`);
     sound.play();
 }
 //listen to the message channel.
-window.Echo.private('message.' + auth_id).listen("Message", (e) => {
+window.Echo.private("message." + auth_id).listen("Message", (e) => {
     console.log(e);
-    if(getMessengerId() != e.from_id){
+    if (getMessengerId() != e.from_id) {
         updateContactItem(e.from_id);
         playnotifysound();
     }
     let message = receiveMessagecard(e);
-    if(getMessengerId() == e.from_id){
-    messagechatBoxcontainer.append(message);
-    scrollToBottom(messagechatBoxcontainer);
+    if (getMessengerId() == e.from_id) {
+        messagechatBoxcontainer.append(message);
+        scrollToBottom(messagechatBoxcontainer);
     }
-})
-
-//listen to the online channel.
-
-Window.Echo.join('online')
-.here((users) => {
-    console.log(users);  //here how many people already at the channel.
-}).joining((user) => {
-
-    console.log(user); //here the people will get notification you're joined to the channel.
-
-
-}).leaving((user) => {
-    console.log(user); //here the people will get notification you're leaved from the channel.
-
 });
+
+//listen to the online channel,to work with presence.
+
+Window.Echo.join("online")
+    .here((users) => {
+        console.log(users); //here how many people already at the channel.
+        //set Active users.
+        setactiveUserId(users);
+        $.each(users, function (index, user) {
+            userActive(user.id);
+        });
+    })
+    .joining((user) => {
+        //here the people will get notification you're joined to the channel.
+        addUsertoArray(user.id);
+        console.log(activeuserId);
+        userActive(user.id);
+    })
+    .leaving((user) => {
+        //here the people will get notification you're leaved from the channel.
+        removeUsertoArray(user.id); //remove user from array.
+        console.log(activeuserId);
+        userinActive(user.id);
+    });
+function updateUserActiveList() {
+    $(".messenger-list-item").each(function (index, value) {
+        let id = $(this).data('id');
+        if(activeuserId.includes(id)) userActive(id);
+
+    });
+}
+
+function userActive(id) {
+    let contactItem = $(`.messenger-list-item[data-id="${id}"]`)
+        .find(".img")
+        .find("span");
+    contactItem.removeClass("inactive");
+    contactItem.addClass("active");
+}
+function userinActive(id) {
+    let contactItem = $(`.messenger-list-item[data-id="${id}"]`)
+        .find(".img")
+        .find("span");
+    contactItem.removeClass("active");
+    contactItem.addClass("inactive");
+}
+
+//set active users to array.
+function setactiveUserId(users) {
+    $.each(users, function (index, user) {
+        activeuserId.push(user.id);
+    });
+}
+
+//add new user to array.
+function addUsertoArray(id) {
+    activeuserId.push(id);
+}
+//remove new user to array.
+function removeUsertoArray(id) {
+    let index = activeuserId.indexOf(id);
+
+    if (index !== -1) {
+        activeuserId.splice(index, 1);
+    }
+}
 
 /**
  * --------------------
