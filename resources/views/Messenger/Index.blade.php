@@ -1,71 +1,55 @@
-<!DOCTYPE html>
-<html lang="en">
+@extends('Messenger.layouts.app')
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
-        <meta name="id" content="">
-    <meta name="csrf_token" content="{{ csrf_token() }}">
-    <meta name="auth_id" content="{{ auth()->user()->id }}">
-    <meta name="url" content="{{ public_path() }}">
-    <title>Chatting Application</title>
-    <link rel="icon" type="image/png" href="images/favicon.png">
-    <link rel="stylesheet" href="{{ asset('chatasset/css') }}/all.min.css">
-    <link rel="stylesheet" href="{{ asset('chatasset/css') }}/bootstrap.min.css">
-    <link rel="stylesheet" href="{{ asset('chatasset/css') }}/slick.css">
-    <link rel="stylesheet" href="{{ asset('chatasset/css') }}/venobox.min.css">
-    <link rel="stylesheet" href="{{ asset('chatasset/css') }}/emojionearea.min.css">
-    <link rel="stylesheet" href="https://unpkg.com/nprogress@0.2.0/nprogress.css">
-    <link rel="stylesheet" href="{{ asset('chatasset/css') }}/spacing.css">
-    <link rel="stylesheet" href="{{ asset('chatasset/css') }}/style.css">
-    <link rel="stylesheet" href="{{ asset('chatasset/css') }}/responsive.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.css">
-    <!-- Scripts -->
-    @vite(['resources/js/app.js', 'resources/js/messenger.js'])
+@section('contents')
+<section class="wsus__chat_app show_info">
 
-</head>
+    @include('Messenger.layouts.user-list-sidebar')
 
-<body>
+    <div class="wsus__chat_area">
 
-    <!--==================================
-        Chatting Application Start
-    ===================================-->
-    @yield('contents')
-    <!--==================================
-        Chatting Application End
-    ===================================-->
+        <div class="wsus__message_paceholder d-none"></div>
+        <div class="wsus__message_paceholder_black d-flex justify-content-center align-items-center">
+            <span class="select_a_user">Select a user for start convercetion</span>
+        </div>
 
-    <!--jquery library js-->
-    <script src="{{asset('chatasset/js/jquery-3.7.1.min.js')}}" type="text/javascript"></script>
-    <!--bootstrap js-->
-    <script type="text/javascript">
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf_token"]').attr('content'),
-            }
-        });
-    </script>
-    <script src="{{ asset('chatasset') }}/js/bootstrap.bundle.min.js"></script>
-    <!--font-awesome js-->
-    {{-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script> --}}
-    <script src="{{ asset('chatasset') }}/js/Font-Awesome.js"></script>
-    <script src="{{ asset('chatasset') }}/js/slick.min.js"></script>
-    <script src="{{ asset('chatasset') }}/js/venobox.min.js"></script>
-    <script src="{{ asset('chatasset') }}/js/emojionearea.min.js"></script>
 
-    <!--main/custom js-->
-    <script src="{{ asset('chatasset') }}/js/main.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.js"></script>
-    <script src="https://unpkg.com/nprogress@0.2.0/nprogress.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
-    <script>
-        var notyf = new Notyf({
-            duration: 5000,
+        <div class="wsus__chat_area_header">
+            <div class="header_left messenger-header">
+                <span class="back_to_list">
+                    <i class="fas fa-arrow-left"></i>
+                </span>
+                <img src="" alt="User" class="img-fluid">
+                <h4></h4>
+            </div>
+            <div class="header_right">
+                <a href="" class="favourite"><i class="fas fa-star"></i></a>
+                <a href="javascript:;" class="info"><i class="fas fa-info-circle"></i></a>
+            </div>
+        </div>
 
-        });
-    </script>
-    @stack('scripts')
-</body>
+        <div class="wsus__chat_area_body">
 
-</html>
+        </div>
+
+        <div class="wsus__chat_area_footer">
+            <div class="footer_message">
+                <div class="img d-none attachment-block">
+                    <img src="" alt="User" class="img-fluid attachment-preview">
+                    <span class="cancel-attachment"><i class="far fa-times"></i></span>
+                </div>
+                <form action="#" class="message-form" enctype="multipart/form-data">
+                    <div class="file">
+                        <label for="file"><i class="far fa-plus"></i></label>
+                        <input id="file" type="file" hidden class="attachment-input" name="attachment" accept="image/*">
+                    </div>
+                    <textarea id="example1" rows="1" placeholder="Type a message.." name="message" class="message-input"></textarea>
+                    <button type="submit"><i class="fas fa-paper-plane"></i></button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    @include('Messenger.layouts.user-info-sidebar')
+
+</section>
+@endsection

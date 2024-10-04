@@ -345,22 +345,25 @@ Route::controller(CartController::class)->group(function () {
 
 ////All Route For the Chat Application.
 
-Route::middleware(['auth'])->group(function () {
-
-    Route::get('messenger-chat', [Messenger::class, 'index'])->name('home');
-    Route::post('profile', [UserProfileController::class, 'update'])->name("profile.update");
-    //search route
-
-    Route::get('messenger-chat/search', [Messenger::class, 'search'])->name('messenger.search');
-    //fetch user by id.
-    Route::get('messenger-id/info', [Messenger::class, 'fetchIdinfo'])->name('messenger.id-info');
-    //send message.
-    Route::post('messengermsg/send-message', [Messenger::class, 'sendMessage'])->name('messenger.sendmessage');
-    Route::get('messenger/fetch-message', [Messenger::class, 'fetchMessage'])->name('messenger.fetchmessage');
-    Route::get('messenger/fetch-contact', [Messenger::class, 'fetchContact'])->name('messenger.fetchcontact');
-    Route::get('messenger/update-contact-item', [Messenger::class, 'updateContactItem'])->name('update.contact-item');
-    Route::post('messenger/make-seen', [Messenger::class, 'makeseen'])->name('messenger.makeseen');
-    //favorite route.
+Route::group(['middleware' => 'auth'], function() {
+    Route::get('messenger', [Messenger::class, 'index'])->name('home');
+    Route::post('profile', [UserProfileController::class, 'update'])->name('profile.update');
+    // search route
+    Route::get('messenger/search', [Messenger::class, 'search'])->name('messenger.search');
+    // fetch user by id
+    Route::get('messenger/id-info', [Messenger::class, 'fetchIdInfo'])->name('messenger.id-info');
+    // send message
+    Route::post('messenger/send-message', [Messenger::class, 'sendMessage'])->name('messenger.send-message');
+    // fetch message
+    Route::get('messenger/fetch-messages', [Messenger::class, 'fetchMessages'])->name('messenger.fetch-messeges');
+    // fetch contacts
+    Route::get('messenger/fetch-contacts', [Messenger::class, 'fetchContacts'])->name('messenger.fetch-contacts');
+    Route::get('messenger/update-contact-item', [Messenger::class, 'updateContactItem'])->name('messenger.update-contact-item');
+    Route::post('messenger/make-seen', [Messenger::class, 'makeSeen'])->name('messenger.make-seen');
+    // favorite routes
     Route::post('messenger/favorite', [Messenger::class, 'favorite'])->name('messenger.favorite');
-    Route::delete('messenger/delete-message', [Messenger::class, 'DeleteMsg'])->name('messenger.DeleteMsg');
+    Route::get('messenger/fetch-favorite', [Messenger::class, 'fetchFavoritesList'])->name('messenger.fetch-favorite');
+    Route::delete('messenger/delete-message', [Messenger::class, 'deleteMessage'])->name('messenger.delete-message');
+
+
 });

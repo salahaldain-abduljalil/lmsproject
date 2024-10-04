@@ -4,9 +4,21 @@
             <span><img src="{{ asset('chatasset/images/chat_list_icon.png') }}" alt="Chat" class="img-fluid"></span>
             MESSAGES
         </h3>
-        <span class="setting" data-bs-toggle="modal" data-bs-target="#exampleModal">
-            <i class="fas fa-user-cog"></i>
-        </span>
+        <div class="d-flex">
+            <form method="POST" action="{{ route('logout') }}">
+                @csrf
+                <a href="route('logout')"
+                    onclick="event.preventDefault();
+                                this.closest('form').submit();"
+                    class="mr-3">
+                    <span class="setting">
+                        <i class="fas fa-sign-out-alt text-danger"></i> </span></a>
+
+            </form>
+            <span class="setting" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                <i class="fas fa-user-cog"></i>
+            </span>
+        </div>
 
         @include('Messenger.Layout.profile-modal')
     </div>
@@ -15,22 +27,22 @@
 
     <div class="wsus__favourite_user">
         <div class="top">favourites</div>
-        @foreach ($favorites as $li)
-        <div class="row favourite_user_slider messenger-list-item" data-id="{{ $li->users->id }}">
-            <div class="col-xl-3">
-                <a href="#" class="wsus__favourite_item">
-                    <div class="img">
-                        <img src="{{ asset($li->users?->avatar) }}" alt="User" class="img-fluid">
-                        <span class="inactive"></span>
-                    </div>
-                    <p>{{ $li->users?->name }}</p>
-                </a>
-            </div>
+        <div class="row favourite_user_slider">
+            @foreach ($favorites as $li)
+                <div class="col-xl-3 messenger-list-item" role="button" data-id="{{ $li->users->id }}">
+                    <a href="#" class="wsus__favourite_item">
+                        <div class="img">
+                            <img src="{{ asset($li->users?->avatar) }}" alt="User" class="img-fluid">
+                            <span class="inactive"></span>
+                        </div>
+                        <p>{{ $li->users?->name }}</p>
+                    </a>
+                </div>
+            @endforeach
 
 
         </div>
 
-        @endforeach
 
     </div>
 

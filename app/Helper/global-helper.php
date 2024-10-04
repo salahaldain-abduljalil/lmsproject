@@ -1,7 +1,6 @@
 
 <?php
 
-
 /**calculate readable human time */
 
 if (!function_exists('timeago')) {
@@ -30,3 +29,10 @@ if (!function_exists('timeago')) {
         }
     }
 }
+
+ /** truncate string */
+ if(!function_exists('truncate')) {
+    function truncate($str, $limit = 18) {
+        return \Str::limit($str, $limit, '...');
+    }
+ }

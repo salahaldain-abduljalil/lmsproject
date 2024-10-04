@@ -1,7 +1,7 @@
 @extends('frontend.master')
 @section('home')
 @section('title')
-    {{ $instructor->name }} | Easy Learning
+    {{ @$instructor->name }} | Easy Learning
 @endsection
 <!-- ================================
                                         START BREADCRUMB AREA
