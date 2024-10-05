@@ -108,7 +108,7 @@
                     <div class="menu-title">Live Chat</div>
                 </a>
                 <ul>
-                    <li> <a href="{{ route('instructor.live.chat') }}"><i class='bx bx-radio-circle'></i>Live Chat</a>
+                    <li> <a href="{{ route('home') }}"><i class='bx bx-radio-circle'></i>Go To The Application Chat</a>
                     </li>
 
 

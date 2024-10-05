@@ -1,6 +1,9 @@
 
 <?php
 
+use Illuminate\Support\Str;
+
+
 /**calculate readable human time */
 
 if (!function_exists('timeago')) {
@@ -13,16 +16,16 @@ if (!function_exists('timeago')) {
         $day = round($timeDifference / 86400);
 
         if ($second <= 60) {
-            if($second <= 1){
+            if ($second <= 1) {
                 return "a second ago";
             }
-            return $second ."s ago";
+            return $second . "s ago";
         } elseif ($minutes <= 60) {
 
-            return $minutes. "m ago";
+            return $minutes . "m ago";
         } elseif ($hour <= 24) {
 
-            return $hour. "m ago";
+            return $hour . "m ago";
         } else {
 
             return date('j m y', strtotime($timestamp));
@@ -30,9 +33,10 @@ if (!function_exists('timeago')) {
     }
 }
 
- /** truncate string */
- if(!function_exists('truncate')) {
-    function truncate($str, $limit = 18) {
-        return \Str::limit($str, $limit, '...');
+/** truncate string */
+if (!function_exists('truncate')) {
+    function truncate($str, $limit = 18)
+    {
+        return Str::limit($str, $limit, '...');
     }
- }
+}
